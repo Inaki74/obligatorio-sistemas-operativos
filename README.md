@@ -15,7 +15,7 @@ Usuario(permiso) 		En una version mas adelantada, pueden tener contraseña y tie
 
 Sistema -> proceso -> usuario
 
-Sistema:
+### Sistema:
 - La clase principal.
 - Tiene una lista de Usuarios, de Procesos y Recursos.
 - Da el procesador (avisa de esto) y avisa que fue devuelto.
@@ -52,4 +52,4 @@ Impresora : Recurso
 - Tomamos el procesador como un recurso? Tiene mutua exclusion?
 - Son los programas un texto largo, un pseudocódigo, o tiene que realmente hacer cosas? Código existente?
 - Simulamos tiempos de espera? (Ejemplo, si simulamos uso de una impresora, hacemos un timeout artificial?)
-- Mutua exclusion, limita necesariamente a ser utilizado por un solo proceso? Ejemplo de patio 
+- Mutua exclusion, limita necesariamente a ser utilizado por un solo proceso? Ejemplo de patio
