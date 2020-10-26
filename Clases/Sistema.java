@@ -1,8 +1,8 @@
 package Clases;
-import java.util.*;
+import java.util.ArrayList;
 
 public class Sistema{
-    Sistema(){
+    public Sistema(){
         System.out.println("Esto es un sistema");
         _current = this;
     }
@@ -14,5 +14,16 @@ public class Sistema{
         }
 
         return _current;
+    }
+    
+    private ArrayList<PCB> procesos = new ArrayList<PCB>();
+
+    //Pre: Hay al menos un proceso.
+    public void DarProcesador(){
+        
+    }
+
+    public boolean pierdeProcesador(){
+        
     }
 }
