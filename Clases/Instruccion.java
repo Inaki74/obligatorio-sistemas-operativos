@@ -3,18 +3,10 @@ package Clases;
 public class Instruccion{
     public Instruccion(String nom, int cic){
         nombre = nom;
-        ciclos = cic; //wanna be quantums
+        ciclos = cic;
     }
 
-    @Override
-    public int hashCode(){
-        int p = 26;
-        int ret = 0;
-        for(int i = 0; i < nombre.length(); i++){
-            ret += Math.pow(p,i) * nombre.charAt(i);
-        }
-        return ret;
-    }
+   
 
     @Override
     public boolean equals(Object in){
@@ -22,6 +14,17 @@ public class Instruccion{
         return aux.nombre == this.nombre;
     }
 
+
+
+    public String logInstruccion(){
+        String log = this.nombre + " en " + this.ciclos + " ciclos.";
+        //Idea: Cuando tengamos definido un mensaje, agregar un switch que devuelve log personalizado basado en cada Comando
+
+        return log;
+    }
+
+
     public String nombre; // fork(), stackalloc(), 
     public int ciclos;
+
 }

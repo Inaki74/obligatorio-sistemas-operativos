@@ -1,6 +1,5 @@
 package Clases;
-import java.util.Hashtable;
-import Clases.Sistema;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class PCB{
@@ -9,51 +8,57 @@ public class PCB{
         
         id = ids;
         programa = new String[prog.length];
-
         Random r = new Random();
         for(int i = 0; i < prog.length; i++){
-            programa[i] = prog[i];
-            if(!nombresInstrucciones.contains(prog[i])){
-                nombresInstrucciones.put(prog[i], r.nextInt(10));
+            programa[i] = prog[i]; 
+            Instruccion aux = new Instruccion(prog[i], 0);
+            if(!listaInstrucciones.contains(aux)){
+                Instruccion inst = new Instruccion(prog[i], r.nextInt(5) + 1);
+                listaInstrucciones.add(inst);
             }
         }
     }
 
     private enum Estado{
-        Listo,
-        EnEjecucion,
-        Bloqueado,
+        Listo, // 0
+        EnEjecucion, // 1
+        Bloqueado, // 2
     }
-    
 
+
+    public Estado estadoActual;
     public int id;
     private int linea = 0;
     private String[] programa;
-    private Hashtable<String, Integer> nombresInstrucciones = new Hashtable<String, Integer>();
+    private ArrayList<Instruccion> listaInstrucciones = new ArrayList<Instruccion>();
 
     public boolean ejecutar(){
-        boolean termino = true;
-        int ciclos = 0;
-        // Para si:
-        // - Pide un recurso, esta ocupado <--
-        // - Pierde el procesador <--- thiz
-        //      Cuando pierdo el procesador?
-        // - No tiene permiso.
-        while(linea < programa.length && termino){
-
-            // while(ciclos != instruccion.ciclos)
-            if(Sistema.Current().pierdeProcesador()){
-
-            }
+        boolean termino = false;
+        int quantum = Procesador.Current().getQuantums();
+        int quantumActual = 0;
+        while(!termino && quantumActual <= quantum){
+            String instruccionActual = programa[linea];
+            int posicionInstruccion = listaInstrucciones.indexOf(new Instruccion(instruccionActual, 0));
+            int quantumInstruccion = listaInstrucciones.get(posicionInstruccion).ciclos;
             
-
-            System.out.println(programa[linea]);
-
-            ciclos++;
+            System.out.println(listaInstrucciones.get(posicionInstruccion).logInstruccion());
+            quantumActual += quantumInstruccion;
             linea++;
+            if(linea <= programa.length) termino = true;
         }
-
         return termino;
+    }
+
+    public void cambiarEstado(String estado){
+        switch(estado){
+            case "Listo": estadoActual = Estado.Listo;
+            break;
+            case "EnEjecucion": estadoActual = Estado.EnEjecucion;
+            break;
+            case "Bloqueado": estadoActual = Estado.Bloqueado;
+            break;
+            default: System.out.println("PCB/cambiarEstado: Escribiste mal el estado gei");;
+        }
     }
 
     @Override

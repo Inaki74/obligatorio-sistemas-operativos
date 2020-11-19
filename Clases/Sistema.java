@@ -17,13 +17,16 @@ public class Sistema{
     }
     
     private ArrayList<PCB> procesos = new ArrayList<PCB>();
+    
 
     //Pre: Hay al menos un proceso.
     public void DarProcesador(){
         
     }
 
+
+
     public boolean pierdeProcesador(){
-        
+        return false;
     }
 }
