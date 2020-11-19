@@ -3,7 +3,7 @@ package Clases;
 public class Instruccion{
     public Instruccion(String nom, int cic){
         nombre = nom;
-        ciclos = cic;
+        ciclos = cic; //wanna be quantums
     }
 
     @Override
