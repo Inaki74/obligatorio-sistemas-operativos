@@ -3,10 +3,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class PCB{
-    PCB(int ids, String[] prog){
-        System.out.println("Esto es un proceso");
-        
+    public PCB(int ids, String[] prog){
         id = ids;
+        estadoActual = Estado.Listo;
         programa = new String[prog.length];
         Random r = new Random();
         for(int i = 0; i < prog.length; i++){
@@ -17,6 +16,8 @@ public class PCB{
                 listaInstrucciones.add(inst);
             }
         }
+
+        System.out.println(this.toString() + " fue creado.");
     }
 
     private enum Estado{
@@ -33,6 +34,7 @@ public class PCB{
     private ArrayList<Instruccion> listaInstrucciones = new ArrayList<Instruccion>();
 
     public boolean ejecutar(){
+        cambiarEstado("EnEjecucion");
         boolean termino = false;
         int quantum = Procesador.Current().getQuantums();
         int quantumActual = 0;
@@ -44,21 +46,60 @@ public class PCB{
             System.out.println(listaInstrucciones.get(posicionInstruccion).logInstruccion());
             quantumActual += quantumInstruccion;
             linea++;
-            if(linea <= programa.length) termino = true;
+            if(linea == programa.length) termino = true;
         }
         return termino;
     }
 
     public void cambiarEstado(String estado){
+        Estado estadoAnterior = estadoActual;
         switch(estado){
-            case "Listo": estadoActual = Estado.Listo;
-            break;
-            case "EnEjecucion": estadoActual = Estado.EnEjecucion;
-            break;
-            case "Bloqueado": estadoActual = Estado.Bloqueado;
-            break;
+            case "Listo": 
+                estadoActual = Estado.Listo;
+                break;
+            case "EnEjecucion": 
+                estadoActual = Estado.EnEjecucion;
+                break;
+            case "Bloqueado": 
+                estadoActual = Estado.Bloqueado;
+                break;
             default: System.out.println("PCB/cambiarEstado: Escribiste mal el estado gei");;
         }
+
+        System.out.println(imprimirEstado(estadoActual) + razonCambio(estadoActual, estadoAnterior)) ;
+    }
+
+    public int getLinea(){
+        return linea + 1;
+    }
+
+    private String razonCambio(Estado estadoNuevo, Estado estadoAnterior){
+        if(estadoNuevo == Estado.EnEjecucion && estadoAnterior == Estado.Listo) {
+            return " por despacho.";
+        }
+
+        if(estadoNuevo == Estado.Listo && estadoAnterior == Estado.EnEjecucion) {
+            return " por timeout.";
+        }
+
+        return "PCB/razonCambio/ERROR: Caso no ponderado de cambio de estado. Mira que paso";
+    }
+
+    private String imprimirEstado(Estado estado){
+        String fin = "";
+        switch(estado){
+            case EnEjecucion:
+                fin = "En Ejecucion";
+                break;
+            case Listo:
+                fin = "Listo";
+                break;
+            case Bloqueado:
+                fin = "Bloquedo";
+                break;
+
+        }
+        return "El estado de " + this.toString() + " cambio a " + fin;
     }
 
     @Override

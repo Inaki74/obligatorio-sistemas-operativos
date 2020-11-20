@@ -3,8 +3,8 @@ import java.util.Queue;
 import java.util.LinkedList;
 
 public class Procesador{
-    Procesador(){
-        System.out.println("Esto es un procesador");
+    public Procesador(){
+        quantums = 10;
         _current = this;
     }
 
@@ -18,27 +18,38 @@ public class Procesador{
         return _current;
     }
     
-
     Queue<PCB> scheduler = new LinkedList<>();
     private int quantums;
 
     public void addProceso (PCB newProceso){
         scheduler.add(newProceso);
+        System.out.println("El " + newProceso.toString() + " fue añadido al scheduler.");
     }
 
-    void ejecutarProceso(){
+    public boolean ejecutarProximoProceso(){
         if(scheduler.isEmpty()){
             System.out.print("FATAL: El scheduler esta vacio.");
-            return;
+            return true;
         }
 
-        PCB proximo = scheduler.remove();
-        // -> Sistema busca en la lista y le da el procesador
-        // -> Proceso tiene una funcion que usa el procesador.
-        // Si necesita recurso y eso.
-        // Sacariamos la foto por aca -- version 2.
+        PCB procesoActual = Procesador.Current().getNextProceso();
+        boolean terminoProceso = procesoActual.ejecutar();
 
-        proximo.ejecutar();
+        if(!terminoProceso) {
+            procesoActual.cambiarEstado("Listo");
+            System.out.println("El proceso " + procesoActual.toString() + " aun no ha terminado. Quedo en la linea " + procesoActual.getLinea());
+            addProceso(procesoActual);
+        } else {
+            System.out.println("El proceso " + procesoActual.toString() + " ha terminado su ejecucion.");
+        }
+       
+        return scheduler.isEmpty();
+    }
+
+    public PCB getNextProceso(){
+        PCB ret = scheduler.remove();
+        System.out.println("Se le da el Procesador a " + ret.toString());
+        return ret;
     }
 
     public int getQuantums(){

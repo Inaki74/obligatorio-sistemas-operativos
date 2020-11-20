@@ -1,5 +1,40 @@
-# obligatorio-sistemas-operativos
-Obligatorio sistemas operativos, Gaston Landeira, Matias Gonzalez e Iñaki Etchegaray.
+# OBLIGATORIO SISTEMAS OPERATIVOS
+
+---------------------------------
+---------------------------------
+#### Docente: Angel Caffa
+#### Grupo: M4D
+#### Alumnos:
+- #### Matías Gonzalez (219329)
+- #### Gastón Landeira (238473)
+- #### Iñaki Etchegaray (241072)
+
+
+## TECNOLOGIA:
+
+Nosotros para realizar la simulacion, utilizamos el lenguaje de programacion JAVA en su última version (buscarversion). Codificamos en VSCode y mantuvimos un versionado por un repositorio en GitHub.
+
+## ACERCAMIENTO AL PROBLEMA
+
+Para realizar la simulacion, nosotros tuvimos un Acercamiento Iterativo. Es decir, creabamos distintas versiones de la solucion y la ibamos mejorando por iteracion.
+
+### PRIMERA ITERACION
+
+En una primera iteracion...
+
+### N Iteracion
+
+### ESPECIALIZACION
+
+Nostros decidimos especializar nuestro SO en...
+
+
+## PRUEBAS:
+
+### CASOS DE PRUEBA PROPORCIONADOS: (Datos cargados)
+
+
+
 
 ## CLASES
 
@@ -10,7 +45,7 @@ Programa = lista de Instrucciones = texto => programa lista de texto
 Sistema -> Singleton  <— procesador
 Proceso -> Hay que identificar todo lo que tienen los procesos.
 Recurso <— Serialmente Reutilizable y No Reutilizable
-Procesador extends Recurso
+Procesador extends Recurso <--- Singleton
 Usuario(permiso) 		En una version mas adelantada, pueden tener contraseña y tienen que ser creados, por ahora ya van a estar cargados.
 
 Sistema -> proceso -> usuario
