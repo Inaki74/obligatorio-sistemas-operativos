@@ -18,7 +18,7 @@ public class Sistema{
     private ArrayList<PCB> procesos = new ArrayList<PCB>();
     
     public String[][] ImportarProgramas(){
-        String[][] programas = { {"A", "A", "B", "B", "A", "C"}, 
+        String[][] programas = { {"Pedir Impresora", "Usar Impresora", "Devolver Impresora", "B", "A", "C"}, 
                                  {"A", "A", "D", "E", "E", "F", "D"}, 
                                  {"P", "P", "L", "F", "A", "D", "D", "F", "A"}};
 

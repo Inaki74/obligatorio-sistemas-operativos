@@ -15,6 +15,8 @@ class main{
         boolean termino = false;
         while(!termino) {
             termino = Procesador.Current().ejecutarProximoProceso();
+
+            // Lista RCB + 1 en ese quantum a todos lo que esten siendo utilizados
         }
 
         System.out.println("No hay mas procesos por ejecutar...");

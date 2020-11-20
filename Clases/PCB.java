@@ -6,6 +6,7 @@ public class PCB{
     public PCB(int ids, String[] prog){
         id = ids;
         estadoActual = Estado.Listo;
+        recursoUtilizado = null;
         programa = new String[prog.length];
         Random r = new Random();
         for(int i = 0; i < prog.length; i++){
@@ -30,6 +31,7 @@ public class PCB{
     public Estado estadoActual;
     public int id;
     private int linea = 0;
+    private RCB recursoUtilizado;
     private String[] programa;
     private ArrayList<Instruccion> listaInstrucciones = new ArrayList<Instruccion>();
 

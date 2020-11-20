@@ -2,9 +2,24 @@ package Clases;
 
 
 public class RCB{
-    RCB(){
-        System.out.println("Esto es un recurso");
+    public RCB(int i, String n, int tiempoEspera){
+        id = i;
+        nombre = n;
+        tiempoEsperaMaximo = tiempoEspera;
+        procesoAsociado = null;
     }
-    public int tiempoEspera; // Tiempo en ciclos de procesador.
-    
+
+    public void setTiempoEspera(int tiempo){
+        tiempoEsperaMaximo = tiempo;
+    }
+
+    public boolean getDisponibilidad(){
+        return procesoAsociado != null;
+    }
+
+    private int id;
+    private String nombre;
+    private int tiempoEsperaMaximo; // Tiempo en ciclos de procesador.
+    private int tiempoEsperaActual = 0;
+    private PCB procesoAsociado;
 }

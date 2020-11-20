@@ -57,9 +57,6 @@ public class Procesador{
     }
 
     public void esperar(RCB recurso){
-        int ciclo = 0;
-        for(int i = 0; i < recurso.tiempoEspera; i++){
-            
-        }
+        
     }
 }
