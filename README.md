@@ -16,12 +16,40 @@ Nosotros para realizar la simulacion, utilizamos el lenguaje de programacion JAV
 
 ## ACERCAMIENTO AL PROBLEMA
 
-Para realizar la simulacion, nosotros tuvimos un Acercamiento Iterativo. Es decir, creabamos distintas versiones de la solucion y la ibamos mejorando por iteracion.
+Para realizar la simulacion, nosotros tuvimos un acercamiento Iterativo. Es decir, creabamos distintas versiones de la solucion y la ibamos mejorando por iteracion.
 
 ### PRIMERA ITERACION
 
-En una primera iteracion...
+En la primera iteracion, definimos la base del Simulador. Creamos las clases basicas, como por ejemplo: Sistema, Procesador, PCB, RCB(base nomas), Instruccion y main.
 
+Quisimos simular la dinamica de scheduling y round robin del procesador con procesos estaticos, sin recursos y un solo usuario, respetando los timeouts de los procesos. 
+
+Para ello, definimos el quantum del procesador, insertamos las instrucciones y le asignamos una cantidad de ciclos determinada pero aleatoria, el loop principal, el guardado de los procesos en sistema, sus estados (Listo y En Ejecucion) y el log en consola de los mismos.
+
+### Primer set de Pruebas:
+<img src="imagenes_readme/iteracion1_imagen1_pruebas.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+<img src="imagenes_readme/iteracion1_imagen2_pruebas.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+El resultado loggeado fue el siguiente:
+
+<img src="imagenes_readme/iteracion1_imagen3_pruebas.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+<img src="imagenes_readme/iteracion1_imagen4_pruebas.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+<img src="imagenes_readme/iteracion1_imagen5_pruebas.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+Como una primera iteracion del programa, nos sastiface mucho y cumple los objetivos que nos pusimos. (TEMA INSTRUCCIONES CON DISTINTA DURACION)
 ### N Iteracion
 
 ### ESPECIALIZACION
