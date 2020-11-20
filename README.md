@@ -1,5 +1,68 @@
-# obligatorio-sistemas-operativos
-Obligatorio sistemas operativos, Gaston Landeira, Matias Gonzalez e Iñaki Etchegaray.
+# OBLIGATORIO SISTEMAS OPERATIVOS
+
+---------------------------------
+---------------------------------
+#### Docente: Angel Caffa
+#### Grupo: M4D
+#### Alumnos:
+- #### Matías Gonzalez (219329)
+- #### Gastón Landeira (238473)
+- #### Iñaki Etchegaray (241072)
+
+
+## TECNOLOGIA:
+
+Nosotros para realizar la simulacion, utilizamos el lenguaje de programacion JAVA en su última version (buscarversion). Codificamos en VSCode y mantuvimos un versionado por un repositorio en GitHub.
+
+## ACERCAMIENTO AL PROBLEMA
+
+Para realizar la simulacion, nosotros tuvimos un acercamiento Iterativo. Es decir, creabamos distintas versiones de la solucion y la ibamos mejorando por iteracion.
+
+### PRIMERA ITERACION
+
+En la primera iteracion, definimos la base del Simulador. Creamos las clases basicas, como por ejemplo: Sistema, Procesador, PCB, RCB(base nomas), Instruccion y main.
+
+Quisimos simular la dinamica de scheduling y round robin del procesador con procesos estaticos, sin recursos y un solo usuario, respetando los timeouts de los procesos. 
+
+Para ello, definimos el quantum del procesador, insertamos las instrucciones y le asignamos una cantidad de ciclos determinada pero aleatoria, el loop principal, el guardado de los procesos en sistema, sus estados (Listo y En Ejecucion) y el log en consola de los mismos.
+
+### Primer set de Pruebas:
+<img src="imagenes_readme/iteracion1_imagen1_pruebas.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+<img src="imagenes_readme/iteracion1_imagen2_pruebas.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+El resultado loggeado fue el siguiente:
+
+<img src="imagenes_readme/iteracion1_imagen3_pruebas.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+<img src="imagenes_readme/iteracion1_imagen4_pruebas.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+<img src="imagenes_readme/iteracion1_imagen5_pruebas.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+Como una primera iteracion del programa, nos sastiface mucho y cumple los objetivos que nos pusimos. (TEMA INSTRUCCIONES CON DISTINTA DURACION)
+### N Iteracion
+
+### ESPECIALIZACION
+
+Nostros decidimos especializar nuestro SO en...
+
+
+## PRUEBAS:
+
+### CASOS DE PRUEBA PROPORCIONADOS: (Datos cargados)
+
+
+
 
 ## CLASES
 
@@ -10,7 +73,7 @@ Programa = lista de Instrucciones = texto => programa lista de texto
 Sistema -> Singleton  <— procesador
 Proceso -> Hay que identificar todo lo que tienen los procesos.
 Recurso <— Serialmente Reutilizable y No Reutilizable
-Procesador extends Recurso
+Procesador extends Recurso <--- Singleton
 Usuario(permiso) 		En una version mas adelantada, pueden tener contraseña y tienen que ser creados, por ahora ya van a estar cargados.
 
 Sistema -> proceso -> usuario
