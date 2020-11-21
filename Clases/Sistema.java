@@ -34,9 +34,11 @@ public class Sistema{
     
     public void crearRecursos() {
         String[] listaRecursos = importarRecursos();
+
         RCB recurso1 = new RCB(listaRecursos[0], 4);
         RCB recurso2 = new RCB(listaRecursos[1], 2);
         RCB recurso3 = new RCB(listaRecursos[2], 6);
+        
         recursos.add(recurso1);
         recursos.add(recurso2);
         recursos.add(recurso3);

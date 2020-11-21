@@ -8,6 +8,7 @@ public class PCB{
         id = ids;
         estadoActual = Estado.Listo;
         recursoUtilizado = null;
+        
         programa = new String[prog.length];
         Random r = new Random();
         for(int i = 0; i < prog.length; i++){

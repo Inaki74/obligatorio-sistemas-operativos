@@ -8,8 +8,18 @@ public class RCB{
         procesoAsociado = null;
     }
 
-    public void setTiempoEspera(int tiempo){
-        tiempoEsperaMaximo = tiempo;
+    private String nombre;
+    private int tiempoEsperaMaximo; // Tiempo en quantums de procesador.
+    private int tiempoEsperaActual = 0;
+    private PCB procesoAsociado;
+    private boolean enUso;
+
+    public void avanzar(){
+        tiempoEsperaActual++;
+    }
+
+    public boolean termino(){
+        return tiempoEsperaActual == tiempoEsperaMaximo;
     }
 
     public boolean getDisponibilidad(){
@@ -20,6 +30,18 @@ public class RCB{
         return this.nombre;
     }
 
+    public boolean getUso (){
+        return this.enUso;
+    }
+
+    public PCB getProceso(){
+        return procesoAsociado;
+    }
+
+    public void setTiempoEspera(int tiempo){
+        tiempoEsperaMaximo = tiempo;
+    }
+    
     public void setProceso (PCB proceso){
         this.procesoAsociado = proceso;
     }
@@ -28,31 +50,9 @@ public class RCB{
         this.enUso = estado;
     }
 
-    public boolean getUso (){
-        return this.enUso;
-    }
-
-    public void avanzar(){
-        tiempoEsperaActual++;
-    }
-
     public void setTiempoAcutal(int tiempo){
         tiempoEsperaActual = tiempo;
     }
-
-    public boolean termino(){
-        return tiempoEsperaActual == tiempoEsperaMaximo;
-    }
-
-    public PCB getProceso(){
-        return procesoAsociado;
-    }
-
-    private String nombre;
-    private int tiempoEsperaMaximo; // Tiempo en quantums de procesador.
-    private int tiempoEsperaActual = 0;
-    private PCB procesoAsociado;
-    private boolean enUso;
 
     @Override
     public String toString(){
