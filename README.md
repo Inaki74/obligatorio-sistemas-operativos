@@ -55,7 +55,7 @@ Ademas, decidimos agregar un código de colores al log, ya que se estaba tornand
 - Verde: Manejo de Procesos y Schedulling.
 - Cyan: Cambio de estado de los Procesos.
 - Blanco: Ejecucion de instrucciones.
-- Blanco Fuerte: Manejo de Recursos.
+- Blanco Fuerte (Bold): Manejo de Recursos.
 - Amarillo: Advertencias de procesos no finalizados y recursos aun utilizados.
 - Rojo: Errores que no deberían de ocurrir.
 
@@ -81,6 +81,8 @@ Y la imágen siguiente muestra parte de los resultados de la prueba. De nuevo, l
 
 De nuevo, analizando el caso y los resultados, son todos favorables. Incluso un caso borde que aparece funciona como deberia. El mismo es que un Proceso entre en timeout luego de pedir un recurso, el resultado esperado es que se acceda al recurso y quede bloqueado, pero no realizando su función ya que no se le dio el comando de ser utilizado. Sucede lo esperado.
 
+
+//- Violeta: Manejo de permisos.
 ### N Iteracion
 
 ### ESPECIALIZACION

@@ -10,6 +10,8 @@ class main{
         Sistema sistema = Sistema.Current();
         sistema.crearProcesos();
         sistema.crearRecursos();
+        sistema.crearUsuarios();
+        
         sistema.cargarTodosProcesos();
 
         //Loop que use los procesos
@@ -17,7 +19,7 @@ class main{
         while(!termino) {
             termino = Procesador.Current().ejecutarProximoProceso();
 
-           sistema.avanzarRecursos();
+            sistema.avanzarRecursos();
         }
 
         System.out.println(colores.ANSI_RED + "No hay mas procesos por ejecutar..." + colores.ANSI_RESET);

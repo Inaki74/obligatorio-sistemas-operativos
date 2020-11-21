@@ -39,6 +39,11 @@ public class Procesador{
         PCB procesoActual = Procesador.Current().getNextProceso();
         boolean terminoProceso = false;
 
+        //chequear permisos
+        if(!procesoActual.getUsuario().getPermisoPrograma(procesoActual.getId())){
+            System.out.println(colores.ANSI_PURPLE + "El " + procesoActual.getUsuario() + " no tiene permisos para ejecutar proceso " + procesoActual.getId()  + colores.ANSI_RESET);
+            return false;
+        }
         // Si esta bloqueado, no ejecutar y avisar.
         if(!procesoActual.enEstado("Bloqueado")){
             terminoProceso = procesoActual.ejecutar();

@@ -3,11 +3,14 @@ package Clases;
 
 public class RCB{
     public RCB(String n, int tiempoEspera){
+        id = idNumero;
+        aumentarID();
         nombre = n;
         tiempoEsperaMaximo = tiempoEspera;
         procesoAsociado = null;
     }
 
+    private int id;
     private String nombre;
     private int tiempoEsperaMaximo; // Tiempo en quantums de procesador.
     private int tiempoEsperaActual = 0;
@@ -38,6 +41,10 @@ public class RCB{
         return procesoAsociado;
     }
 
+    public int getId(){
+        return id;
+    }
+
     public void setTiempoEspera(int tiempo){
         tiempoEsperaMaximo = tiempo;
     }
@@ -52,6 +59,11 @@ public class RCB{
 
     public void setTiempoAcutal(int tiempo){
         tiempoEsperaActual = tiempo;
+    }
+
+    private static int idNumero = 0;
+    private void aumentarID(){
+        idNumero++;
     }
 
     @Override

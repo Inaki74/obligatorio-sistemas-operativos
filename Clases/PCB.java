@@ -19,6 +19,7 @@ public class PCB{
                 listaInstrucciones.add(inst);
             }
         }
+        usuario = null;
 
         System.out.println(this.toString() + " fue creado.");
     }
@@ -36,6 +37,7 @@ public class PCB{
     private RCB recursoUtilizado;
     private String[] programa;
     private ArrayList<Instruccion> listaInstrucciones = new ArrayList<Instruccion>();
+    private Usuario usuario;
 
     public boolean ejecutar(){
         cambiarEstado("EnEjecucion");
@@ -149,6 +151,11 @@ public class PCB{
     private boolean pedirRecurso (String nombre) {
         Sistema sistema = Sistema.Current();
         RCB recurso = sistema.getRCB(nombre);
+        if(!usuario.getPermisoRecurso(recurso.getId())){
+            System.out.println(colores.ANSI_PURPLE + recurso.getNombre() + " no se encuentra disponible para el " + usuario.getUsuario() + colores.ANSI_RESET);
+            linea = programa.length;
+            return true;
+        }
         if(recurso.getDisponibilidad()){
             this.recursoUtilizado = recurso;
             recurso.setProceso(this);
@@ -156,6 +163,7 @@ public class PCB{
             return true;
         }else{
             System.out.println(colores.ANSI_WHITE_BOLD + recurso.getNombre() + " no se encuentra disponible." + colores.ANSI_RESET);
+            cambiarEstado(("Bloqueado"));
             return false;
         }
         
@@ -201,6 +209,12 @@ public class PCB{
 
     public int getId(){
         return id;
+    }
+    public Usuario getUsuario(){
+        return usuario;
+    }
+    public void setUsuario(Usuario p){
+        usuario = p;
     }
 
     @Override
