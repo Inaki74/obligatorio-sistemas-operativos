@@ -93,11 +93,11 @@ public class Sistema{
         // Avanzas en todos los RCBs, si uno termina pasa su Proceso de Bloqueado a Listo y su tiempo actual se settea de nuevo a 0 y su uso en false
         for(int i = 0; i < recursos.size(); i++){
             RCB recurso = recursos.get(i);
-            if(!recurso.getDisponibilidad()){
+            if(recurso.getUso()){
                 recurso.avanzar();
                 if(recurso.termino()){
                     PCB proceso = recurso.getProceso();
-                    System.out.println("Sistema/avanzarRecursos: Se termino de usar el " + recurso);
+                    System.out.println(colores.ANSI_WHITE_BOLD + "Sistema/avanzarRecursos: Se termino de usar el " + recurso + colores.ANSI_RESET);
                     recurso.setTiempoAcutal(0);
                     recurso.setUso(false);
                     proceso.cambiarEstado("Listo");

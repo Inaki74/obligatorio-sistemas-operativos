@@ -1,6 +1,6 @@
 import Clases.Sistema;
 import Clases.Procesador;
-
+import Clases.colores;
 
 class main{
     public static void main (String [] args){
@@ -20,8 +20,8 @@ class main{
            sistema.avanzarRecursos();
         }
 
-        System.out.println("No hay mas procesos por ejecutar...");
-        System.out.println("EXIT");
+        System.out.println(colores.ANSI_RED + "No hay mas procesos por ejecutar..." + colores.ANSI_RESET);
+        System.out.println(colores.ANSI_RED + "EXIT" + colores.ANSI_RESET);
     }
 
 }

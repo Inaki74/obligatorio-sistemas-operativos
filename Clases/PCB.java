@@ -1,6 +1,7 @@
 package Clases;
 import java.util.ArrayList;
 import java.util.Random;
+import Clases.colores;
 
 public class PCB{
     public PCB(int ids, String[] prog){
@@ -37,23 +38,30 @@ public class PCB{
 
     public boolean ejecutar(){
         cambiarEstado("EnEjecucion");
+
         boolean termino = false;
         boolean noAvanza = false;
         int quantum = Procesador.Current().getQuantum();
         int quantumActual = 0;
+
         while(!termino && quantumActual < quantum && !noAvanza){
+            // Conseguimos la instruccion, su posicion y su quantum.
             String instruccionActual = programa[linea];
             int posicionInstruccion = listaInstrucciones.indexOf(new Instruccion(instruccionActual, 0));
             int quantumInstruccion = listaInstrucciones.get(posicionInstruccion).ciclos;
+
+            // Logeamos la instruccion y su ejecucion
             System.out.println(listaInstrucciones.get(posicionInstruccion).logInstruccion());
-            if(this.interaccionRecurso(listaInstrucciones.get(posicionInstruccion))){
+
+            // Se interpreta la instruccion y vemos si involucra un recurso.
+            if(interaccionRecurso(listaInstrucciones.get(posicionInstruccion))){
                 quantumActual += quantumInstruccion;
                 linea++;
             }else{
                 noAvanza = true;
             }
+
             if(enEstado("Bloqueado")) noAvanza = true;
-            
             
             if(linea == programa.length) termino = true;
             
@@ -73,14 +81,10 @@ public class PCB{
             case "Bloqueado": 
                 estadoActual = Estado.Bloqueado;
                 break;
-            default: System.out.println("PCB/cambiarEstado: Escribiste mal el estado gei");;
+            default: System.out.println(colores.ANSI_RED + "PCB/cambiarEstado: Escribiste mal el estado" + colores.ANSI_RESET);
         }
 
-        System.out.println(imprimirEstado(estadoActual) + razonCambio(estadoActual, estadoAnterior)) ;
-    }
-
-    public int getLinea(){
-        return linea + 1;
+        System.out.println(colores.ANSI_CYAN + imprimirEstado(estadoActual) + razonCambio(estadoActual, estadoAnterior)  + colores.ANSI_RESET);
     }
 
     private String razonCambio(Estado estadoNuevo, Estado estadoAnterior){
@@ -100,7 +104,7 @@ public class PCB{
             return " por finalizada ejecucion del recurso ";
         }
 
-        return "PCB/razonCambio/ERROR: Caso no ponderado de cambio de estado. Mira que paso";
+        return colores.ANSI_RED + "PCB/razonCambio/ERROR: Caso no ponderado de cambio de estado. Mira que paso"  + colores.ANSI_RESET;
     }
 
     private String imprimirEstado(Estado estado){
@@ -121,6 +125,9 @@ public class PCB{
     }
 
     private boolean interaccionRecurso (Instruccion ins) {
+        // Si es pedir, usar o devolver, reaccionar con recurso adecuado
+        // De lo contrario, ignorar.
+
         String tipo = ins.getTipo();
         switch (tipo) {
             case "Pedir": 
@@ -138,38 +145,29 @@ public class PCB{
         }
     }
 
-    public int getId(){
-        return id;
-    }
-
     private boolean pedirRecurso (String nombre) {
         Sistema sistema = Sistema.Current();
         RCB recurso = sistema.getRCB(nombre);
         if(recurso.getDisponibilidad()){
             this.recursoUtilizado = recurso;
             recurso.setProceso(this);
-            System.out.println(recurso.getNombre() + " se encuentra disponible, se lo asigna al proceso " + this.id);
+            System.out.println(colores.ANSI_WHITE_BOLD + recurso.getNombre() + " se encuentra disponible, se lo asigna al proceso " + this.id + colores.ANSI_RESET);
             return true;
         }else{
-            System.out.println(recurso.getNombre() + " no se encuentra disponible.");
+            System.out.println(colores.ANSI_WHITE_BOLD + recurso.getNombre() + " no se encuentra disponible." + colores.ANSI_RESET);
             return false;
         }
         
     }
 
     private void usarRecurso (String nombre) {
-        this.estadoActual = Estado.Bloqueado;
-        System.out.println(imprimirEstado(estadoActual) + razonCambio(estadoActual, Estado.EnEjecucion));
+        cambiarEstado(("Bloqueado"));
         recursoUtilizado.setUso(true);
     }
 
 //PEDIS estaba vacio -> Usar E/S vuelvo -> hago cosas -> paseo el perro -> Devolver?
     private boolean devolverRecurso (String nombre) {
-        if(recursoUtilizado.getUso()){
-            System.out.println("El " + recursoUtilizado + " sigue en ejecucion");
-            return false;
-        }
-        System.out.println("El " + recursoUtilizado + " fue devuelto");
+        System.out.println(colores.ANSI_WHITE_BOLD + "El " + recursoUtilizado + " fue devuelto. " + colores.ANSI_RESET);
         recursoUtilizado.setProceso(null);
         recursoUtilizado = null;
         return true;
@@ -187,11 +185,22 @@ public class PCB{
             case Bloqueado: 
                 mismoEstado = (estado == "Bloqueado");
                 break;
-            default: System.out.println("PCB/enEstado: Pediste un estado que no existe");
+            default: System.out.println(colores.ANSI_RED + "PCB/enEstado: Pediste un estado que no existe" + colores.ANSI_RESET);
         }
         return mismoEstado;
     }
 
+    public int getLinea(){
+        return linea + 1;
+    }
+
+    public RCB getRecurso(){
+        return recursoUtilizado;
+    }
+
+    public int getId(){
+        return id;
+    }
 
     @Override
     public String toString(){
