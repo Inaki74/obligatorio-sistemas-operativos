@@ -19,6 +19,21 @@ public class Instruccion{
         return log;
     }
 
+    public String getTipo (){
+        //tipos: Pedir, Usar, Devolver
+        String[] arrayInstruccion = nombre.split(" ");
+        String tipo = arrayInstruccion[0];
+        return tipo;
+    }
+
+    public String getIdRecurso () {
+
+        String[] arrayInstruccion = nombre.split(" ");
+        String tipo = arrayInstruccion[1];
+        
+        return tipo;
+    }
+    
     public String nombre; // fork(), stackalloc(), 
     public int ciclos;
 }
