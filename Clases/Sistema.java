@@ -20,8 +20,8 @@ public class Sistema{
     private ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 
     public String[][] ImportarProgramas(){
-        String[][] programas = { {"Pedir impresora#1", "Usar impresora#1", "Devolver impresora#1", "B", "A", "C"}, 
-                                 {"A", "A", "D","Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2", "E", "E", "F", "D"}, 
+        String[][] programas = { {"Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2", "B", "A", "C"}, 
+                                 {"A", "A", "D","Pedir impresora#1", "Usar impresora#1", "Devolver impresora#1", "E", "E", "F", "D"}, 
                                  {"P", "P", "L", "F","Pedir impresora#3", "Usar impresora#3", "Devolver impresora#3", "A", "D", "D", "F", "A"}};
 
         return programas;
@@ -124,19 +124,19 @@ public class Sistema{
         String[][] programas = ImportarProgramas();
 
         // agregar usuario
-        PCB proceso1 = new PCB(0, programas[0]);
-        PCB proceso2 = new PCB(1, programas[1]);
-        PCB proceso3 = new PCB(2, programas[0]);
-        PCB proceso4 = new PCB(3, programas[1]);
-        PCB proceso5 = new PCB(4, programas[2]);
-        PCB proceso6 = new PCB(5, programas[2]);
+        PCB proceso0 = new PCB(0, programas[0], 0);
+        PCB proceso1 = new PCB(1, programas[1], 1);
+        PCB proceso2 = new PCB(2, programas[0], 0);
+        PCB proceso3 = new PCB(3, programas[1], 1);
+        PCB proceso4 = new PCB(4, programas[2], 2);
+        PCB proceso5 = new PCB(5, programas[2], 2);
 
+        procesos.add(proceso0);
         procesos.add(proceso1);
         procesos.add(proceso2);
         procesos.add(proceso3);
         procesos.add(proceso4);
         procesos.add(proceso5);
-        procesos.add(proceso6);
     }
 
     public void crearUsuarios() {
@@ -159,9 +159,15 @@ public class Sistema{
     }
 
     private void cargarUsuariosEnProcesos(){
-        for(int i=0; i < procesos.size(); i++){
-            procesos.get(i).setUsuario(usuarios.get(1)); //por ahora todos son admin
-        }
+        procesos.get(0).setUsuario(usuarios.get(0));
+        procesos.get(1).setUsuario(usuarios.get(2));
+        procesos.get(2).setUsuario(usuarios.get(2));
+        procesos.get(3).setUsuario(usuarios.get(2));
+        procesos.get(4).setUsuario(usuarios.get(0));
+        procesos.get(5).setUsuario(usuarios.get(1));
+        // for(int i=0; i < procesos.size(); i++){
+        //     procesos.get(i).setUsuario(usuarios.get(2)); //por ahora todos son admin
+        // }
     }
 
     public RCB getRCB (String nombre) {

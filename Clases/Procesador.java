@@ -40,7 +40,7 @@ public class Procesador{
         boolean terminoProceso = false;
 
         //chequear permisos
-        if(!procesoActual.getUsuario().getPermisoPrograma(procesoActual.getId())){
+        if(!procesoActual.getUsuario().getPermisoPrograma(procesoActual.getIdPrograma())){
             System.out.println(colores.ANSI_PURPLE + "El " + procesoActual.getUsuario() + " no tiene permisos para ejecutar proceso " + procesoActual.getId()  + colores.ANSI_RESET);
             return false;
         }

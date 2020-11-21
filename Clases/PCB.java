@@ -4,11 +4,12 @@ import java.util.Random;
 import Clases.colores;
 
 public class PCB{
-    public PCB(int ids, String[] prog){
+    public PCB(int ids, String[] prog, int idProg){
         id = ids;
+        idPrograma = idProg;
         estadoActual = Estado.Listo;
         recursoUtilizado = null;
-        
+
         programa = new String[prog.length];
         Random r = new Random();
         for(int i = 0; i < prog.length; i++){
@@ -31,8 +32,9 @@ public class PCB{
     }
 
 
-    public Estado estadoActual;
-    public int id;
+    private Estado estadoActual;
+    private int id;
+    private int idPrograma;
     private int linea = 0;
     private RCB recursoUtilizado;
     private String[] programa;
@@ -43,30 +45,30 @@ public class PCB{
         cambiarEstado("EnEjecucion");
 
         boolean termino = false;
-        boolean noAvanza = false;
+        boolean bloqueado = false;
         int quantum = Procesador.Current().getQuantum();
-        int quantumActual = 0;
+        int cicloActual = 0;
 
-        while(!termino && quantumActual < quantum && !noAvanza){
+        while(!termino && cicloActual < quantum && !bloqueado){
             // Conseguimos la instruccion, su posicion y su quantum.
             String instruccionActual = programa[linea];
             int posicionInstruccion = listaInstrucciones.indexOf(new Instruccion(instruccionActual, 0));
-            int quantumInstruccion = listaInstrucciones.get(posicionInstruccion).ciclos;
+            int ciclosInstruccion = listaInstrucciones.get(posicionInstruccion).ciclos;
 
             // Logeamos la instruccion y su ejecucion
             System.out.println(listaInstrucciones.get(posicionInstruccion).logInstruccion());
 
             // Se interpreta la instruccion y vemos si involucra un recurso.
-            if(interaccionRecurso(listaInstrucciones.get(posicionInstruccion))){
-                quantumActual += quantumInstruccion;
-                linea++;
-            }else{
-                noAvanza = true;
+            interaccionRecurso(listaInstrucciones.get(posicionInstruccion));
+            
+            cicloActual += ciclosInstruccion;
+            linea++;
+            
+            if(enEstado("Bloqueado")){
+                bloqueado = true;
             }
 
-            if(enEstado("Bloqueado")) noAvanza = true;
-            
-            if(linea == programa.length) termino = true;
+            if(linea >= programa.length) termino = true;
             
         }
         return termino;
@@ -127,7 +129,7 @@ public class PCB{
         return "El estado de " + this.toString() + " cambio a " + fin;
     }
 
-    private boolean interaccionRecurso (Instruccion ins) {
+    private void interaccionRecurso (Instruccion ins) {
         // Si es pedir, usar o devolver, reaccionar con recurso adecuado
         // De lo contrario, ignorar.
 
@@ -135,51 +137,55 @@ public class PCB{
         switch (tipo) {
             case "Pedir": 
                 String nombreRecurso = ins.getIdRecurso();
-                return pedirRecurso(nombreRecurso);
+                pedirRecurso(nombreRecurso);
+                break;
             case "Usar": 
                 String nombreRecurso1 = ins.getIdRecurso();
                 usarRecurso(nombreRecurso1);
-                return true;
+                break;
             case "Devolver": 
                 String nombreRecurso2 = ins.getIdRecurso();
-                return devolverRecurso(nombreRecurso2);
+                devolverRecurso(nombreRecurso2);
+                break;
             default: 
-                return true;
+                return;
         }
     }
 
-    private boolean pedirRecurso (String nombre) {
+    private void pedirRecurso (String nombre) {
         Sistema sistema = Sistema.Current();
         RCB recurso = sistema.getRCB(nombre);
+
         if(!usuario.getPermisoRecurso(recurso.getId())){
-            System.out.println(colores.ANSI_PURPLE + recurso.getNombre() + " no se encuentra disponible para el " + usuario.getUsuario() + colores.ANSI_RESET);
-            linea = programa.length;
-            return true;
+            System.out.println(colores.ANSI_PURPLE + usuario.getUsuario() +
+            " no tiene los permisos para usar el/la " +  recurso.getNombre() + colores.ANSI_RESET);
+            linea = programa.length - 1;
+            return;
         }
+
         if(recurso.getDisponibilidad()){
-            this.recursoUtilizado = recurso;
-            recurso.setProceso(this);
-            System.out.println(colores.ANSI_WHITE_BOLD + recurso.getNombre() + " se encuentra disponible, se lo asigna al proceso " + this.id + colores.ANSI_RESET);
-            return true;
+            System.out.println(colores.ANSI_WHITE_BOLD + recurso.getNombre() +
+            " se encuentra disponible, se lo asigna al proceso " + this.id + colores.ANSI_RESET);
         }else{
-            System.out.println(colores.ANSI_WHITE_BOLD + recurso.getNombre() + " no se encuentra disponible." + colores.ANSI_RESET);
-            cambiarEstado(("Bloqueado"));
-            return false;
+            System.out.println(colores.ANSI_WHITE_BOLD + recurso.getNombre() +
+            " no se encuentra disponible." + colores.ANSI_RESET);
+            cambiarEstado("Bloqueado");
         }
-        
+
+        this.recursoUtilizado = recurso;
+        recurso.agregarProceso(this);
     }
 
     private void usarRecurso (String nombre) {
-        cambiarEstado(("Bloqueado"));
+        cambiarEstado("Bloqueado");
         recursoUtilizado.setUso(true);
     }
 
 //PEDIS estaba vacio -> Usar E/S vuelvo -> hago cosas -> paseo el perro -> Devolver?
-    private boolean devolverRecurso (String nombre) {
+    private void devolverRecurso (String nombre) {
         System.out.println(colores.ANSI_WHITE_BOLD + "El " + recursoUtilizado + " fue devuelto. " + colores.ANSI_RESET);
-        recursoUtilizado.setProceso(null);
+        recursoUtilizado.removerProceso();
         recursoUtilizado = null;
-        return true;
     }
 
     public boolean enEstado (String estado) {
@@ -210,6 +216,11 @@ public class PCB{
     public int getId(){
         return id;
     }
+
+    public int getIdPrograma(){
+        return idPrograma;
+    }
+
     public Usuario getUsuario(){
         return usuario;
     }
