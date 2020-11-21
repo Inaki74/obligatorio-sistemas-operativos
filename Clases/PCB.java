@@ -38,17 +38,25 @@ public class PCB{
     public boolean ejecutar(){
         cambiarEstado("EnEjecucion");
         boolean termino = false;
-        int quantum = Procesador.Current().getQuantums();
+        boolean noAvanza = false;
+        int quantum = Procesador.Current().getQuantum();
         int quantumActual = 0;
-        while(!termino && quantumActual <= quantum){
+        while(!termino && quantumActual < quantum && !noAvanza){
             String instruccionActual = programa[linea];
             int posicionInstruccion = listaInstrucciones.indexOf(new Instruccion(instruccionActual, 0));
             int quantumInstruccion = listaInstrucciones.get(posicionInstruccion).ciclos;
-            
             System.out.println(listaInstrucciones.get(posicionInstruccion).logInstruccion());
-            quantumActual += quantumInstruccion;
-            linea++;
+            if(this.interaccionRecurso(listaInstrucciones.get(posicionInstruccion))){
+                quantumActual += quantumInstruccion;
+                linea++;
+            }else{
+                noAvanza = true;
+            }
+            if(enEstado("Bloqueado")) noAvanza = true;
+            
+            
             if(linea == programa.length) termino = true;
+            
         }
         return termino;
     }
@@ -84,6 +92,14 @@ public class PCB{
             return " por timeout.";
         }
 
+        if(estadoNuevo == Estado.Bloqueado && estadoAnterior == Estado.EnEjecucion) {
+            return " por uso de recurso (E/S)";
+        }
+
+        if(estadoNuevo == Estado.Listo && estadoAnterior == Estado.Bloqueado){
+            return " por finalizada ejecucion del recurso ";
+        }
+
         return "PCB/razonCambio/ERROR: Caso no ponderado de cambio de estado. Mira que paso";
     }
 
@@ -97,12 +113,85 @@ public class PCB{
                 fin = "Listo";
                 break;
             case Bloqueado:
-                fin = "Bloquedo";
+                fin = "Bloqueado";
                 break;
 
         }
         return "El estado de " + this.toString() + " cambio a " + fin;
     }
+
+    private boolean interaccionRecurso (Instruccion ins) {
+        String tipo = ins.getTipo();
+        switch (tipo) {
+            case "Pedir": 
+                String nombreRecurso = ins.getIdRecurso();
+                return pedirRecurso(nombreRecurso);
+            case "Usar": 
+                String nombreRecurso1 = ins.getIdRecurso();
+                usarRecurso(nombreRecurso1);
+                return true;
+            case "Devolver": 
+                String nombreRecurso2 = ins.getIdRecurso();
+                return devolverRecurso(nombreRecurso2);
+            default: 
+                return true;
+        }
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    private boolean pedirRecurso (String nombre) {
+        Sistema sistema = Sistema.Current();
+        RCB recurso = sistema.getRCB(nombre);
+        if(recurso.getDisponibilidad()){
+            this.recursoUtilizado = recurso;
+            recurso.setProceso(this);
+            System.out.println(recurso.getNombre() + " se encuentra disponible, se lo asigna al proceso " + this.id);
+            return true;
+        }else{
+            System.out.println(recurso.getNombre() + " no se encuentra disponible.");
+            return false;
+        }
+        
+    }
+
+    private void usarRecurso (String nombre) {
+        this.estadoActual = Estado.Bloqueado;
+        System.out.println(imprimirEstado(estadoActual) + razonCambio(estadoActual, Estado.EnEjecucion));
+        recursoUtilizado.setUso(true);
+    }
+
+//PEDIS estaba vacio -> Usar E/S vuelvo -> hago cosas -> paseo el perro -> Devolver?
+    private boolean devolverRecurso (String nombre) {
+        if(recursoUtilizado.getUso()){
+            System.out.println("El " + recursoUtilizado + " sigue en ejecucion");
+            return false;
+        }
+        System.out.println("El " + recursoUtilizado + " fue devuelto");
+        recursoUtilizado.setProceso(null);
+        recursoUtilizado = null;
+        return true;
+    }
+
+    public boolean enEstado (String estado) {
+        boolean mismoEstado = false;
+        switch(estadoActual){
+            case Listo: 
+                mismoEstado = (estado == "Listo");
+                break;
+            case EnEjecucion:  
+                mismoEstado = (estado == "EnEjecucion");
+                break;
+            case Bloqueado: 
+                mismoEstado = (estado == "Bloqueado");
+                break;
+            default: System.out.println("PCB/enEstado: Pediste un estado que no existe");
+        }
+        return mismoEstado;
+    }
+
 
     @Override
     public String toString(){

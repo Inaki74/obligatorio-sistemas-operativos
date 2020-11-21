@@ -1,10 +1,12 @@
 package Clases;
 import java.util.Queue;
+
+
 import java.util.LinkedList;
 
 public class Procesador{
     public Procesador(){
-        quantums = 10;
+        quantum = 10;
         _current = this;
     }
 
@@ -19,7 +21,7 @@ public class Procesador{
     }
     
     Queue<PCB> scheduler = new LinkedList<>();
-    private int quantums;
+    private int quantum;
 
     public void addProceso (PCB newProceso){
         scheduler.add(newProceso);
@@ -36,7 +38,10 @@ public class Procesador{
         boolean terminoProceso = procesoActual.ejecutar();
 
         if(!terminoProceso) {
-            procesoActual.cambiarEstado("Listo");
+            if(!procesoActual.enEstado("Bloqueado")){
+                procesoActual.cambiarEstado("Listo");
+            }
+            
             System.out.println("El proceso " + procesoActual.toString() + " aun no ha terminado. Quedo en la linea " + procesoActual.getLinea());
             addProceso(procesoActual);
         } else {
@@ -52,8 +57,8 @@ public class Procesador{
         return ret;
     }
 
-    public int getQuantums(){
-        return quantums;
+    public int getQuantum(){
+        return quantum;
     }
 
     public void esperar(RCB recurso){
