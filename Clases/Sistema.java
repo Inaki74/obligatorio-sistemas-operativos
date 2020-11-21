@@ -20,14 +20,14 @@ public class Sistema{
 
     public String[][] ImportarProgramas(){
         String[][] programas = { {"Pedir impresora#1", "Usar impresora#1", "Devolver impresora#1", "B", "A", "C"}, 
-                                 {"A", "A", "D", "E", "E", "F", "D"}, 
-                                 {"P", "P", "L", "F", "A", "D", "D", "F", "A"}};
+                                 {"A", "A", "D","Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2", "E", "E", "F", "D"}, 
+                                 {"P", "P", "L", "F","Pedir impresora#3", "Usar impresora#3", "Devolver impresora#3", "A", "D", "D", "F", "A"}};
 
         return programas;
     }
 
     public String[] importarRecursos(){
-        String[] recursos = {"impresora#1"};
+        String[] recursos = {"impresora#1", "impresora#2", "impresora#3"};
         
         return recursos;
     }
@@ -35,7 +35,11 @@ public class Sistema{
     public void crearRecursos() {
         String[] listaRecursos = importarRecursos();
         RCB recurso1 = new RCB(listaRecursos[0], 4);
+        RCB recurso2 = new RCB(listaRecursos[1], 2);
+        RCB recurso3 = new RCB(listaRecursos[2], 6);
         recursos.add(recurso1);
+        recursos.add(recurso2);
+        recursos.add(recurso3);
     }
 
     public void crearProcesos() {
