@@ -95,7 +95,7 @@ Además, cabe mencionar que arreglamos un error conceptual que teníamos. El mis
 
 Además agregamos el color violeta a nuestro código de colores que representa el manejo de permisos.
 
-<img src="imagenes_readme/iteracion2_imagen2_explicacion.png"
+<img src="imagenes_readme/iteracion3_imagen2_explicacion.png"
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
 
