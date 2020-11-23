@@ -41,3 +41,21 @@
 <img src="imagenes_readme/anexo_iteracion2_pruebas5.png"
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
+
+
+
+<img src="imagenes_readme/iteracion3_imagen7_pruebas.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+<img src="imagenes_readme/iteracion3_imagen8_pruebas.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+<img src="imagenes_readme/iteracion3_imagen9_pruebas.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+<img src="imagenes_readme/iteracion3_imagen10_pruebas.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />

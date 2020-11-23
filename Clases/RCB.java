@@ -1,17 +1,22 @@
 package Clases;
+import java.util.Queue;
+import java.util.LinkedList;
 
 
 public class RCB{
     public RCB(String n, int tiempoEspera){
+        id = idNumero;
+        aumentarID();
         nombre = n;
         tiempoEsperaMaximo = tiempoEspera;
-        procesoAsociado = null;
+        procesosAsociados = new LinkedList<>();
     }
 
+    private int id;
     private String nombre;
     private int tiempoEsperaMaximo; // Tiempo en quantums de procesador.
     private int tiempoEsperaActual = 0;
-    private PCB procesoAsociado;
+    private Queue<PCB> procesosAsociados;
     private boolean enUso;
 
     public void avanzar(){
@@ -23,7 +28,7 @@ public class RCB{
     }
 
     public boolean getDisponibilidad(){
-        return procesoAsociado == null;
+        return procesosAsociados.isEmpty();
     }
 
     public String getNombre () {
@@ -35,15 +40,26 @@ public class RCB{
     }
 
     public PCB getProceso(){
-        return procesoAsociado;
+        return procesosAsociados.peek();
+    }
+
+    public int getId(){
+        return id;
     }
 
     public void setTiempoEspera(int tiempo){
         tiempoEsperaMaximo = tiempo;
     }
     
-    public void setProceso (PCB proceso){
-        this.procesoAsociado = proceso;
+    public void agregarProceso (PCB proceso){
+        procesosAsociados.add(proceso);
+    }
+
+    public void removerProceso(){
+        procesosAsociados.remove();
+        
+        if(procesosAsociados.peek() != null)
+            procesosAsociados.peek().cambiarEstado("Listo");
     }
 
     public void setUso (boolean estado){
@@ -52,6 +68,11 @@ public class RCB{
 
     public void setTiempoAcutal(int tiempo){
         tiempoEsperaActual = tiempo;
+    }
+
+    private static int idNumero = 0;
+    private void aumentarID(){
+        idNumero++;
     }
 
     @Override

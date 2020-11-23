@@ -17,10 +17,11 @@ public class Sistema{
     
     private ArrayList<PCB> procesos = new ArrayList<PCB>();
     private ArrayList<RCB> recursos = new ArrayList<RCB>();
+    private ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 
     public String[][] ImportarProgramas(){
-        String[][] programas = { {"Pedir impresora#1", "Usar impresora#1", "Devolver impresora#1", "B", "A", "C"}, 
-                                 {"A", "A", "D","Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2", "E", "E", "F", "D"}, 
+        String[][] programas = { {"Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2", "B", "A", "C"}, 
+                                 {"A", "A", "D","Pedir impresora#1", "Usar impresora#1", "Devolver impresora#1", "E", "E", "F", "D"}, 
                                  {"P", "P", "L", "F","Pedir impresora#3", "Usar impresora#3", "Devolver impresora#3", "A", "D", "D", "F", "A"}};
 
         return programas;
@@ -32,6 +33,81 @@ public class Sistema{
         return recursos;
     }
     
+    //usuarios
+    public String[] importarUsuarios(){
+        String[] usuarios = {"Matixatim Admin", "Inaki.exe User", "GL Guest", "Caffa Admin"};
+        
+        return usuarios;
+    }
+
+    public enum Perfiles{
+        Admin,
+        User,
+        Guest,
+    }
+
+    public Perfiles definirPerfil(String perfil){
+        Perfiles p = Perfiles.Guest;
+        switch(perfil){
+            case "Admin": 
+                p = Perfiles.Admin;
+                break;
+            case "User": 
+                p = Perfiles.User;
+                break;
+            case "Guest": 
+                p = Perfiles.Guest;
+                break;
+            default: System.out.println(colores.ANSI_RED + "error al definir perfil" + colores.ANSI_RESET);
+        }
+        return p;
+    }
+
+    public boolean[] devolverPermisosProgramas(Perfiles p){
+        boolean[] permisosProgramas = new boolean[procesos.size()];
+        switch(p){
+            case Admin:
+                for(int i=0; i<procesos.size(); i++){
+                    permisosProgramas[i] = true; 
+                }
+            break;
+            case User:
+                permisosProgramas[0] = true;
+                permisosProgramas[1] = false;
+                permisosProgramas[2] = true;
+            break;
+            case Guest:
+                permisosProgramas[0] = false;
+                permisosProgramas[1] = false;
+                permisosProgramas[2] = true;
+            break;
+        }
+        return permisosProgramas;
+    }
+
+    public boolean[] devolverPermisosRecursos(Perfiles p){
+        boolean[] permisosRecursos = new boolean[procesos.size()];
+        switch(p){
+            case Admin:
+                for(int i=0; i<procesos.size(); i++){
+                    permisosRecursos[i] = true; 
+                }
+            break;
+            case User:
+                permisosRecursos[0] = true;
+                permisosRecursos[1] = false;
+                permisosRecursos[2] = true;
+            break;
+            case Guest:
+                permisosRecursos[0] = false;
+                permisosRecursos[1] = false;
+                permisosRecursos[2] = true;
+            break;
+        }
+        return permisosRecursos;
+    }
+
+
     public void crearRecursos() {
         String[] listaRecursos = importarRecursos();
 
@@ -47,25 +123,51 @@ public class Sistema{
     public void crearProcesos() {
         String[][] programas = ImportarProgramas();
 
-        PCB proceso1 = new PCB(1, programas[0]);
-        PCB proceso2 = new PCB(2, programas[1]);
-        PCB proceso3 = new PCB(3, programas[0]);
-        PCB proceso4 = new PCB(4, programas[1]);
-        PCB proceso5 = new PCB(5, programas[2]);
-        PCB proceso6 = new PCB(6, programas[2]);
+        // agregar usuario
+        PCB proceso0 = new PCB(0, programas[0], 0);
+        PCB proceso1 = new PCB(1, programas[1], 1);
+        PCB proceso2 = new PCB(2, programas[2], 2);
+        PCB proceso3 = new PCB(3, programas[1], 1);
+        PCB proceso4 = new PCB(4, programas[2], 2);
+        PCB proceso5 = new PCB(5, programas[1], 2);
 
+        procesos.add(proceso0);
         procesos.add(proceso1);
         procesos.add(proceso2);
         procesos.add(proceso3);
         procesos.add(proceso4);
         procesos.add(proceso5);
-        procesos.add(proceso6);
+    }
+
+    public void crearUsuarios() {
+        String[] listaUsuarios = importarUsuarios();
+
+        for(int i=0; i<listaUsuarios.length; i++){
+            String usuario[] = listaUsuarios[i].split(" ");
+            boolean[] permisosRecursos = devolverPermisosRecursos(definirPerfil(usuario[1]));
+            boolean[] permisosProgramas = devolverPermisosProgramas(definirPerfil(usuario[1]));
+            Usuario newUsuario = new Usuario(usuario[0], permisosRecursos, permisosProgramas);
+            usuarios.add(newUsuario);
+        }
+        cargarUsuariosEnProcesos();
     }
 
     public void cargarTodosProcesos() {
         for(int i = 0; i < procesos.size(); i++){
             Procesador.Current().addProceso(procesos.get(i));
         }
+    }
+
+    private void cargarUsuariosEnProcesos(){
+        procesos.get(0).setUsuario(usuarios.get(0));
+        procesos.get(1).setUsuario(usuarios.get(2));
+        procesos.get(2).setUsuario(usuarios.get(2));
+        procesos.get(3).setUsuario(usuarios.get(2));
+        procesos.get(4).setUsuario(usuarios.get(0));
+        procesos.get(5).setUsuario(usuarios.get(1));
+        // for(int i=0; i < procesos.size(); i++){
+        //     procesos.get(i).setUsuario(usuarios.get(2)); //por ahora todos son admin
+        // }
     }
 
     public RCB getRCB (String nombre) {
