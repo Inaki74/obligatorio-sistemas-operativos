@@ -125,7 +125,7 @@ Cabe destacar que el Admin tiene permiso para todos los programas, mientras que 
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
 
-Las pruebas corren de manera esperada, el Usuario 'Matixitam' corre todos los procesos sin problema. Sin embargo, el Usuario 'GL' no puede correr el proceso 1 y 3, pero si el proceso 2, tal como se esperaba. Nuevamente, una versión completa de las pruebas se encuentra en el Anexo.
+Las pruebas corren de manera esperada, el Usuario 'Matixatim' corre todos los procesos sin problema. Sin embargo, el Usuario 'GL' no puede correr el proceso 1 y 3, pero si el proceso 2, tal como se esperaba. Nuevamente, una versión completa de las pruebas se encuentra en el Anexo.
 
 ### N Iteracion
 
