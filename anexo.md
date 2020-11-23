@@ -1,5 +1,5 @@
 
-
+P1
 <img src="imagenes_readme/iteracion1_imagen3_pruebas.png"
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
@@ -13,7 +13,7 @@
      style="float: left; margin-right: 10px;" />
 
 
-
+P2
 <img src="imagenes_readme/iteracion2_imagen1_pruebas.png"
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
@@ -43,7 +43,7 @@
      style="float: left; margin-right: 10px;" />
 
 
-
+P3
 <img src="imagenes_readme/iteracion3_imagen7_pruebas.png"
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />

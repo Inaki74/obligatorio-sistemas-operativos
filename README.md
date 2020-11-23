@@ -127,6 +127,8 @@ Cabe destacar que el Admin tiene permiso para todos los programas, mientras que 
 
 Las pruebas corren de manera esperada, el Usuario 'Matixatim' corre todos los procesos sin problema. Sin embargo, el Usuario 'GL' no puede correr el proceso 1 y 3, pero si el proceso 2, tal como se esperaba. Nuevamente, una versión completa de las pruebas se encuentra en el Anexo.
 
+Para Iteracion 4 mencionar que el PCB tiene que tener lista de recursos despues de probar hacer un deadlock.
+
 ### N Iteracion
 
 ### ESPECIALIZACION

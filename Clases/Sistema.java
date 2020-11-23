@@ -18,13 +18,17 @@ public class Sistema{
     private ArrayList<PCB> procesos = new ArrayList<PCB>();
     private ArrayList<RCB> recursos = new ArrayList<RCB>();
     private ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+    private String[][] programas;
 
-    public String[][] ImportarProgramas(){
-        String[][] programas = { {"Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2", "B", "A", "C"}, 
-                                 {"A", "A", "D","Pedir impresora#1", "Usar impresora#1", "Devolver impresora#1", "E", "E", "F", "D"}, 
+// "Pedir impresora#1", "Usar impresora#1", "Devolver impresora#1",
+//"Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2", 
+
+    public void ImportarProgramas(){
+        String[][] progs = { {"Pedir impresora#2", "Usar impresora#2", "Pedir impresora#1", "Usar impresora#1", "Devolver impresora#1", "Devolver impresora#2", "B", "A", "C"}, 
+                                 {"A", "A", "D","Pedir impresora#1", "B", "A", "C", "B", "A", "C", "B", "A", "C", "Usar impresora#1", "Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2",  "Devolver impresora#1", "E"}, 
                                  {"P", "P", "L", "F","Pedir impresora#3", "Usar impresora#3", "Devolver impresora#3", "A", "D", "D", "F", "A"}};
 
-        return programas;
+        programas = progs;
     }
 
     public String[] importarRecursos(){
@@ -64,44 +68,44 @@ public class Sistema{
     }
 
     public boolean[] devolverPermisosProgramas(Perfiles p){
-        boolean[] permisosProgramas = new boolean[procesos.size()];
+        boolean[] permisosProgramas = new boolean[programas.length];
         switch(p){
             case Admin:
-                for(int i=0; i<procesos.size(); i++){
+                for(int i=0; i<programas.length; i++){
                     permisosProgramas[i] = true; 
                 }
             break;
             case User:
                 permisosProgramas[0] = true;
-                permisosProgramas[1] = false;
-                permisosProgramas[2] = true;
+                //permisosProgramas[1] = false;
+                //permisosProgramas[2] = true;
             break;
             case Guest:
                 permisosProgramas[0] = false;
-                permisosProgramas[1] = false;
-                permisosProgramas[2] = true;
+                //permisosProgramas[1] = false;
+                //permisosProgramas[2] = true;
             break;
         }
         return permisosProgramas;
     }
 
     public boolean[] devolverPermisosRecursos(Perfiles p){
-        boolean[] permisosRecursos = new boolean[procesos.size()];
+        boolean[] permisosRecursos = new boolean[programas.length];
         switch(p){
             case Admin:
-                for(int i=0; i<procesos.size(); i++){
+                for(int i=0; i < programas.length; i++){
                     permisosRecursos[i] = true; 
                 }
             break;
             case User:
                 permisosRecursos[0] = true;
-                permisosRecursos[1] = false;
-                permisosRecursos[2] = true;
+                //permisosRecursos[1] = false;
+                //permisosRecursos[2] = true;
             break;
             case Guest:
                 permisosRecursos[0] = false;
-                permisosRecursos[1] = false;
-                permisosRecursos[2] = true;
+                //permisosRecursos[1] = false;
+                //permisosRecursos[2] = true;
             break;
         }
         return permisosRecursos;
@@ -121,11 +125,9 @@ public class Sistema{
     }
 
     public void crearProcesos() {
-        String[][] programas = ImportarProgramas();
-
         // agregar usuario
         PCB proceso0 = new PCB(0, programas[0], 0);
-        PCB proceso1 = new PCB(1, programas[1], 1);
+        PCB proceso1 = new PCB(1, programas[0], 0);
         PCB proceso2 = new PCB(2, programas[2], 2);
         PCB proceso3 = new PCB(3, programas[1], 1);
         PCB proceso4 = new PCB(4, programas[2], 2);
@@ -133,10 +135,10 @@ public class Sistema{
 
         procesos.add(proceso0);
         procesos.add(proceso1);
-        procesos.add(proceso2);
-        procesos.add(proceso3);
-        procesos.add(proceso4);
-        procesos.add(proceso5);
+        // procesos.add(proceso2);
+        // procesos.add(proceso3);
+        // procesos.add(proceso4);
+        // procesos.add(proceso5);
     }
 
     public void crearUsuarios() {
@@ -160,11 +162,11 @@ public class Sistema{
 
     private void cargarUsuariosEnProcesos(){
         procesos.get(0).setUsuario(usuarios.get(0));
-        procesos.get(1).setUsuario(usuarios.get(2));
-        procesos.get(2).setUsuario(usuarios.get(2));
-        procesos.get(3).setUsuario(usuarios.get(2));
-        procesos.get(4).setUsuario(usuarios.get(0));
-        procesos.get(5).setUsuario(usuarios.get(1));
+        procesos.get(1).setUsuario(usuarios.get(0));
+        // procesos.get(2).setUsuario(usuarios.get(2));
+        // procesos.get(3).setUsuario(usuarios.get(2));
+        // procesos.get(4).setUsuario(usuarios.get(0));
+        // procesos.get(5).setUsuario(usuarios.get(1));
         // for(int i=0; i < procesos.size(); i++){
         //     procesos.get(i).setUsuario(usuarios.get(2)); //por ahora todos son admin
         // }

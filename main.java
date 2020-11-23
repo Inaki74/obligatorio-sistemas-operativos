@@ -8,6 +8,7 @@ class main{
         new Procesador();
 
         Sistema sistema = Sistema.Current();
+        sistema.ImportarProgramas();
         sistema.crearProcesos();
         sistema.crearRecursos();
         sistema.crearUsuarios();
