@@ -126,10 +126,10 @@ public class Sistema{
         // agregar usuario
         PCB proceso0 = new PCB(0, programas[0], 0);
         PCB proceso1 = new PCB(1, programas[1], 1);
-        PCB proceso2 = new PCB(2, programas[0], 0);
+        PCB proceso2 = new PCB(2, programas[2], 2);
         PCB proceso3 = new PCB(3, programas[1], 1);
         PCB proceso4 = new PCB(4, programas[2], 2);
-        PCB proceso5 = new PCB(5, programas[2], 2);
+        PCB proceso5 = new PCB(5, programas[1], 2);
 
         procesos.add(proceso0);
         procesos.add(proceso1);
