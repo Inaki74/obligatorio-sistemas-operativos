@@ -8,7 +8,7 @@ public class PCB{
         id = ids;
         idPrograma = idProg;
         estadoActual = Estado.Listo;
-        recursoUtilizado = null;
+        recursosUtilizados = new ArrayList<>();
 
         programa = new String[prog.length];
         Random r = new Random();
@@ -36,7 +36,7 @@ public class PCB{
     private int id;
     private int idPrograma;
     private int linea = 0;
-    private RCB recursoUtilizado;
+    private ArrayList<RCB> recursosUtilizados;
     private String[] programa;
     private ArrayList<Instruccion> listaInstrucciones = new ArrayList<Instruccion>();
     private Usuario usuario;
@@ -172,20 +172,25 @@ public class PCB{
             cambiarEstado("Bloqueado");
         }
 
-        this.recursoUtilizado = recurso;
+        recursosUtilizados.add(recurso);
         recurso.agregarProceso(this);
     }
 
     private void usarRecurso (String nombre) {
         cambiarEstado("Bloqueado");
-        recursoUtilizado.setUso(true);
+        RCB comp = new RCB(nombre, 0);
+        int indexOfComp = recursosUtilizados.indexOf(comp);
+        recursosUtilizados.get(indexOfComp).setUso(true);
     }
 
 //PEDIS estaba vacio -> Usar E/S vuelvo -> hago cosas -> paseo el perro -> Devolver?
     private void devolverRecurso (String nombre) {
-        System.out.println(colores.ANSI_WHITE_BOLD + "El " + recursoUtilizado + " fue devuelto. " + colores.ANSI_RESET);
-        recursoUtilizado.removerProceso();
-        recursoUtilizado = null;
+        RCB comp = new RCB(nombre, 0);
+        int indexOfComp = recursosUtilizados.indexOf(comp);
+        RCB found = recursosUtilizados.get(indexOfComp);
+        System.out.println(colores.ANSI_WHITE_BOLD + "El " + found + " fue devuelto. " + colores.ANSI_RESET);
+        found.removerProceso();
+        recursosUtilizados.remove(found);
     }
 
     public boolean enEstado (String estado) {
@@ -209,8 +214,10 @@ public class PCB{
         return linea + 1;
     }
 
-    public RCB getRecurso(){
-        return recursoUtilizado;
+    public RCB getRecurso(String nombre){
+        RCB comp = new RCB(nombre, 0);
+        int indexOfComp = recursosUtilizados.indexOf(comp);
+        return recursosUtilizados.get(indexOfComp);
     }
 
     public int getId(){
@@ -231,6 +238,12 @@ public class PCB{
     @Override
     public String toString(){
         return "Proceso " + id;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        PCB comp = (PCB)o;
+        return comp.getId() == this.id;
     }
     // Proceso es programa en ejecucion.
     // El programa ponele que es el txt con el orden de instrucciones.

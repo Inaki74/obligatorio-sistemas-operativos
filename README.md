@@ -59,7 +59,7 @@ Ademas, decidimos agregar un código de colores al log, ya que se estaba tornand
 - Amarillo: Advertencias de procesos no finalizados y recursos aun utilizados.
 - Rojo: Errores que no deberían de ocurrir.
 
-Una vez comprobado su funcionalidad con un RSR solo, decidimos agregar casos de prueba con varios RSR. Aun no fueron implementados manejos de Deadlocks ni creacion de Procesos y Recursos.
+Una vez comprobado su funcionalidad con un RSR solo, decidimos agregar casos de prueba con varios RSR. Aun no fueron implementados manejos de Deadlocks.
 
 #### PRUEBAS:
 
@@ -127,7 +127,88 @@ Cabe destacar que el Admin tiene permiso para todos los programas, mientras que 
 
 Las pruebas corren de manera esperada, el Usuario 'Matixatim' corre todos los procesos sin problema. Sin embargo, el Usuario 'GL' no puede correr el proceso 1 y 3, pero si el proceso 2, tal como se esperaba. Nuevamente, una versión completa de las pruebas se encuentra en el Anexo.
 
+### CUARTA ITERACIÓN
+
+Antes de adentrarnos a la proxima iteracion, vale destacar que decidimos probar nuestro sistema contra un deadlock. El deadlock era muy simple:
+
+- Proceso 0: 
+     - Pide Impresora 1.
+     - Corre otras cosas hasta un timeout.
+     - Pide Impresora 2.
+- Proceso 1: 
+     - Pide Impresora 2.
+     - Corre otras cosas hasta un timeout.
+     - Pide Impresora 1.
+
+Ejecutamos estos dos procesos y nos dio un deadlock como aparece en la imagen siguiente:
+
+<img src="imagenes_readme/iteracion4_imagen1_pruebaDeadlock.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+Esto no termina, como es de esperar de un deadlock:
+
+<img src="imagenes_readme/iteracion4_imagen2_pruebaDeadlock.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+Sin embargo, en esta iteracion no quisimos adentrarnos aún en los deadlocks. En vez, quisimos antes lidiar con el tema de la memoria.
+
+Para el manejo de memoria, decidimos simular un sistema de Multiprogramación con Particiones Fijas. Como nuestra cantidad de programas es fija, decidimos hacer una particion por programa. Cada una de ellas posee todos los procesos resultantes de la ejecucion del programa asociado a la particion. Cada una de estas particiones poseen arrays representando el espacio en memoria asignado. Su largo es estatico e igual entre todas las particiones.
+
+El funcionamiento implementado es el siguiente:
+- Un trabajo es iniciado en ejecucion como un proceso nuevo.
+- El proceso va a la partición asociada en memoria.
+- Si hay lugar en memoria para el Proceso:
+     - Se agrega a ese lugar y al Round Robin del Procesador.
+- De lo contrario
+     - Se agrega a una cola localizada en la Partición.
+
+- Si un proceso es removido en memoria por fin de ejecucion (sea por falta de permisos o si realmente termino de hacer su trabajo) se toma un proceso nuevo de la cola y se asigna a la memoria.
+
+Nosotros nos aseguramos de logear esto, así es notable en la simulacóon. Para ello, agregamos el naranja, asociado al manejo de memoria, a nuestro lenguaje de colores.
+
+#### PRUEBAS:
+
+Los datos de prueba de esta iteracion siguen siendo estaticos:
+
+<img src="imagenes_readme/anexo_iteracion4_casosDePruebas1.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+<img src="imagenes_readme/anexo_iteracion4_casosDePruebas2.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+<img src="imagenes_readme/anexo_iteracion4_casosDePruebas3.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+Notar que hay tres procesos corriendo el programa cero, nuestras particiones tienen tamaño estático en memoria de 2 en esta iteración. Por lo tanto, para que la prueba funcione bien, deben de aparecer mensajes que indiquen el guardado del proceso 2 en la lista de espera. Otra cosa a señalar es que sabemos que los programas 0 y 1 estan seteados para realizar deadlocks, pero el programa 1 no corre ya que todos los procesos asociados a el son corridos por un usuario que no tiene permiso para correrlos.
+
+<img src="imagenes_readme/anexo_iteracion4_pruebas1.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+Los resultados de las pruebas son satisfactorios. Tal como debia suceder, el proceso 2 fue alojado en la cola de la particion y no fue añadido a memoria. Mas tarde, cuando se va el proceso 0, el proceso 2 se agrega a memoria y al scheduler:
+
+<img src="imagenes_readme/anexo_iteracion4_pruebas3.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+Nuevamente, el caso completo se encuentra en el anexo.
+
 ### N Iteracion
+
+### GUIA DE COLORES FINAL:
+- Verde: Manejo de Procesos y Schedulling.
+- Cyan: Cambio de estado de los Procesos.
+- Blanco: Ejecucion de instrucciones.
+- Blanco Fuerte (Bold): Manejo de Recursos.
+- Amarillo: Advertencias de procesos no finalizados y recursos aun utilizados.
+- Rojo: Errores que no deberían de ocurrir.
+- Violeta: Manejo de Permisos de Usuarios.
+- Naranja: Manejo de memoria.
 
 ### ESPECIALIZACION
 

@@ -14,17 +14,46 @@ public class Sistema{
 
         return _current;
     }
-    
+
+    private Particion[] particiones;
     private ArrayList<PCB> procesos = new ArrayList<PCB>();
     private ArrayList<RCB> recursos = new ArrayList<RCB>();
     private ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+    private String[][] programas;
 
-    public String[][] ImportarProgramas(){
-        String[][] programas = { {"Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2", "B", "A", "C"}, 
-                                 {"A", "A", "D","Pedir impresora#1", "Usar impresora#1", "Devolver impresora#1", "E", "E", "F", "D"}, 
+    public void crearParticiones(){
+        int cantidadProgramas = programas.length;
+
+        particiones = new Particion[cantidadProgramas];
+
+        for(int i = 0; i < cantidadProgramas; i++){
+            Particion p = new Particion(2, i);
+            particiones[i] = p;
+        }
+    }
+
+    public void asignarAMemoria(PCB proceso){
+        for(int i = 0; i < programas.length; i++){
+            if(particiones[i].getIdPrograma() == proceso.getIdPrograma()){
+                particiones[i].agregarAMemoria(proceso);
+            }
+        }
+    }
+
+    public void removerMemoria(PCB proceso){
+        for(int i = 0; i < programas.length; i++){
+            if(particiones[i].getIdPrograma() == proceso.getIdPrograma()){
+                particiones[i].removerDeMemoria(proceso);
+            }
+        }
+    }
+
+    public void ImportarProgramas(){
+        String[][] progs = { {"Pedir impresora#2", "Usar impresora#2", "Pedir impresora#1", "Usar impresora#1", "Devolver impresora#1", "Devolver impresora#2", "B", "A", "C"}, 
+                                 {"A", "A", "D","Pedir impresora#1", "B", "A", "C", "B", "A", "C", "B", "A", "C", "Usar impresora#1", "Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2", "Devolver impresora#1", "E"}, 
                                  {"P", "P", "L", "F","Pedir impresora#3", "Usar impresora#3", "Devolver impresora#3", "A", "D", "D", "F", "A"}};
 
-        return programas;
+        programas = progs;
     }
 
     public String[] importarRecursos(){
@@ -38,6 +67,18 @@ public class Sistema{
         String[] usuarios = {"Matixatim Admin", "Inaki.exe User", "GL Guest", "Caffa Admin"};
         
         return usuarios;
+    }
+
+    private void cargarUsuariosEnProcesos(){
+        procesos.get(0).setUsuario(usuarios.get(0));
+        procesos.get(1).setUsuario(usuarios.get(0));
+        procesos.get(2).setUsuario(usuarios.get(2));
+        procesos.get(3).setUsuario(usuarios.get(2));
+        procesos.get(4).setUsuario(usuarios.get(0));
+        procesos.get(5).setUsuario(usuarios.get(1));
+        // for(int i=0; i < procesos.size(); i++){
+        //     procesos.get(i).setUsuario(usuarios.get(2)); //por ahora todos son admin
+        // }
     }
 
     public enum Perfiles{
@@ -64,10 +105,10 @@ public class Sistema{
     }
 
     public boolean[] devolverPermisosProgramas(Perfiles p){
-        boolean[] permisosProgramas = new boolean[procesos.size()];
+        boolean[] permisosProgramas = new boolean[programas.length];
         switch(p){
             case Admin:
-                for(int i=0; i<procesos.size(); i++){
+                for(int i=0; i<programas.length; i++){
                     permisosProgramas[i] = true; 
                 }
             break;
@@ -86,10 +127,10 @@ public class Sistema{
     }
 
     public boolean[] devolverPermisosRecursos(Perfiles p){
-        boolean[] permisosRecursos = new boolean[procesos.size()];
+        boolean[] permisosRecursos = new boolean[programas.length];
         switch(p){
             case Admin:
-                for(int i=0; i<procesos.size(); i++){
+                for(int i=0; i < programas.length; i++){
                     permisosRecursos[i] = true; 
                 }
             break;
@@ -121,15 +162,13 @@ public class Sistema{
     }
 
     public void crearProcesos() {
-        String[][] programas = ImportarProgramas();
-
         // agregar usuario
         PCB proceso0 = new PCB(0, programas[0], 0);
-        PCB proceso1 = new PCB(1, programas[1], 1);
-        PCB proceso2 = new PCB(2, programas[2], 2);
+        PCB proceso1 = new PCB(1, programas[0], 0);
+        PCB proceso2 = new PCB(2, programas[0], 0);
         PCB proceso3 = new PCB(3, programas[1], 1);
         PCB proceso4 = new PCB(4, programas[2], 2);
-        PCB proceso5 = new PCB(5, programas[1], 2);
+        PCB proceso5 = new PCB(5, programas[1], 1);
 
         procesos.add(proceso0);
         procesos.add(proceso1);
@@ -137,6 +176,13 @@ public class Sistema{
         procesos.add(proceso3);
         procesos.add(proceso4);
         procesos.add(proceso5);
+
+        asignarAMemoria(proceso0);
+        asignarAMemoria(proceso1);
+        asignarAMemoria(proceso2);
+        asignarAMemoria(proceso3);
+        asignarAMemoria(proceso4);
+        asignarAMemoria(proceso5);
     }
 
     public void crearUsuarios() {
@@ -150,24 +196,6 @@ public class Sistema{
             usuarios.add(newUsuario);
         }
         cargarUsuariosEnProcesos();
-    }
-
-    public void cargarTodosProcesos() {
-        for(int i = 0; i < procesos.size(); i++){
-            Procesador.Current().addProceso(procesos.get(i));
-        }
-    }
-
-    private void cargarUsuariosEnProcesos(){
-        procesos.get(0).setUsuario(usuarios.get(0));
-        procesos.get(1).setUsuario(usuarios.get(2));
-        procesos.get(2).setUsuario(usuarios.get(2));
-        procesos.get(3).setUsuario(usuarios.get(2));
-        procesos.get(4).setUsuario(usuarios.get(0));
-        procesos.get(5).setUsuario(usuarios.get(1));
-        // for(int i=0; i < procesos.size(); i++){
-        //     procesos.get(i).setUsuario(usuarios.get(2)); //por ahora todos son admin
-        // }
     }
 
     public RCB getRCB (String nombre) {

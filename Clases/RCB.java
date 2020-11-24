@@ -79,4 +79,10 @@ public class RCB{
     public String toString(){
         return "Recurso " + nombre;
     }
+
+    @Override
+    public boolean equals(Object a){
+        RCB comp = (RCB)a;
+        return comp.getNombre().equals(this.nombre);
+    }
 }
