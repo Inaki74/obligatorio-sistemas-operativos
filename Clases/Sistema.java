@@ -69,6 +69,18 @@ public class Sistema{
         return usuarios;
     }
 
+    private void cargarUsuariosEnProcesos(){
+        procesos.get(0).setUsuario(usuarios.get(0));
+        procesos.get(1).setUsuario(usuarios.get(0));
+        procesos.get(2).setUsuario(usuarios.get(2));
+        procesos.get(3).setUsuario(usuarios.get(2));
+        procesos.get(4).setUsuario(usuarios.get(0));
+        procesos.get(5).setUsuario(usuarios.get(1));
+        // for(int i=0; i < procesos.size(); i++){
+        //     procesos.get(i).setUsuario(usuarios.get(2)); //por ahora todos son admin
+        // }
+    }
+
     public enum Perfiles{
         Admin,
         User,
@@ -184,24 +196,6 @@ public class Sistema{
             usuarios.add(newUsuario);
         }
         cargarUsuariosEnProcesos();
-    }
-
-    public void cargarTodosProcesos() {
-        for(int i = 0; i < procesos.size(); i++){
-            Procesador.Current().addProceso(procesos.get(i));
-        }
-    }
-
-    private void cargarUsuariosEnProcesos(){
-        procesos.get(0).setUsuario(usuarios.get(0));
-        procesos.get(1).setUsuario(usuarios.get(0));
-        procesos.get(2).setUsuario(usuarios.get(2));
-        procesos.get(3).setUsuario(usuarios.get(2));
-        procesos.get(4).setUsuario(usuarios.get(0));
-        procesos.get(5).setUsuario(usuarios.get(1));
-        // for(int i=0; i < procesos.size(); i++){
-        //     procesos.get(i).setUsuario(usuarios.get(2)); //por ahora todos son admin
-        // }
     }
 
     public RCB getRCB (String nombre) {
