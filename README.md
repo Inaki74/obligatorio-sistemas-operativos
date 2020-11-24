@@ -131,11 +131,11 @@ Las pruebas corren de manera esperada, el Usuario 'Matixatim' corre todos los pr
 
 Antes de adentrarnos a la proxima iteracion, vale destacar que decidimos probar nuestro sistema contra un deadlock. El deadlock era muy simple:
 
-- Proceso 1: 
+- Proceso 0: 
      - Pide Impresora 1.
      - Corre otras cosas hasta un timeout.
      - Pide Impresora 2.
-- Proceso 2: 
+- Proceso 1: 
      - Pide Impresora 2.
      - Corre otras cosas hasta un timeout.
      - Pide Impresora 1.
