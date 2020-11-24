@@ -50,7 +50,7 @@ public class Sistema{
 
     public void ImportarProgramas(){
         String[][] progs = { {"Pedir impresora#2", "Usar impresora#2", "Pedir impresora#1", "Usar impresora#1", "Devolver impresora#1", "Devolver impresora#2", "B", "A", "C"}, 
-                                 {"A", "A", "D","Pedir impresora#1", "B", "A", "C", "B", "A", "C", "B", "A", "C", "Usar impresora#1", "Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2",  "Devolver impresora#1", "E"}, 
+                                 {"A", "A", "D","Pedir impresora#1", "B", "A", "C", "B", "A", "C", "B", "A", "C", "Usar impresora#1", "Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2", "Devolver impresora#1", "E"}, 
                                  {"P", "P", "L", "F","Pedir impresora#3", "Usar impresora#3", "Devolver impresora#3", "A", "D", "D", "F", "A"}};
 
         programas = progs;
