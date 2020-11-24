@@ -142,11 +142,15 @@ Antes de adentrarnos a la proxima iteracion, vale destacar que decidimos probar 
 
 Ejecutamos estos dos procesos y nos dio un deadlock como aparece en la imagen siguiente:
 
-// IMAGEN DE DEADLOCK 1
+<img src="imagenes_readme/teracion4_imagen1_pruebaDeadlock.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
 
 Esto no termina, como es de esperar de un deadlock:
 
-// IMAGEN DE DEADLOCK 2
+<img src="imagenes_readme/teracion4_imagen2_pruebaDeadlock.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
 
 Sin embargo, en esta iteracion no quisimos adentrarnos aún en los deadlocks. En vez, quisimos antes lidiar con el tema de la memoria.
 
@@ -180,13 +184,13 @@ Los datos de prueba de esta iteracion siguen siendo estaticos:
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
 
-Notar que hay tres procesos cero, nuestras particiones tienen tamaño estático en memoria de 2 en esta iteración. Por lo tanto, para que la prueba funcione bien, deben de aparecer mensajes que indiquen el guardado del proceso 2 en memoria. Otra cosa a señalar es que sabemos que los programas 0 y 1 estan seteados para realizar deadlocks, pero el programa 1 no corre ya que todos los procesos asociados a el son corridos por un usuario que no tiene permiso para correrlos.
+Notar que hay tres procesos cero, nuestras particiones tienen tamaño estático en memoria de 2 en esta iteración. Por lo tanto, para que la prueba funcione bien, deben de aparecer mensajes que indiquen el guardado del proceso 2 en la lista de espera. Otra cosa a señalar es que sabemos que los programas 0 y 1 estan seteados para realizar deadlocks, pero el programa 1 no corre ya que todos los procesos asociados a el son corridos por un usuario que no tiene permiso para correrlos.
 
 <img src="imagenes_readme/anexo_iteracion4_pruebas1.png"
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
 
-Los resultados de las pruebas son satisfactorios. Tal como debia suceder, el proceso 2 fue alojado en la cola de la particion y no fue añadido a memoria. Mas tarde cuando se va el proceso 0 se agrega a memoria y al scheduler:
+Los resultados de las pruebas son satisfactorios. Tal como debia suceder, el proceso 2 fue alojado en la cola de la particion y no fue añadido a memoria. Mas tarde, cuando se va el proceso 0, el proceso 2 se agrega a memoria y al scheduler:
 
 <img src="imagenes_readme/anexo_iteracion4_pruebas3.png"
      alt="Markdown Monster icon"
