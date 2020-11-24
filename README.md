@@ -184,7 +184,7 @@ Los datos de prueba de esta iteracion siguen siendo estaticos:
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
 
-Notar que hay tres procesos cero, nuestras particiones tienen tamaño estático en memoria de 2 en esta iteración. Por lo tanto, para que la prueba funcione bien, deben de aparecer mensajes que indiquen el guardado del proceso 2 en la lista de espera. Otra cosa a señalar es que sabemos que los programas 0 y 1 estan seteados para realizar deadlocks, pero el programa 1 no corre ya que todos los procesos asociados a el son corridos por un usuario que no tiene permiso para correrlos.
+Notar que hay tres procesos corriendo el programa cero, nuestras particiones tienen tamaño estático en memoria de 2 en esta iteración. Por lo tanto, para que la prueba funcione bien, deben de aparecer mensajes que indiquen el guardado del proceso 2 en la lista de espera. Otra cosa a señalar es que sabemos que los programas 0 y 1 estan seteados para realizar deadlocks, pero el programa 1 no corre ya que todos los procesos asociados a el son corridos por un usuario que no tiene permiso para correrlos.
 
 <img src="imagenes_readme/anexo_iteracion4_pruebas1.png"
      alt="Markdown Monster icon"
