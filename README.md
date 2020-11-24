@@ -142,13 +142,13 @@ Antes de adentrarnos a la proxima iteracion, vale destacar que decidimos probar 
 
 Ejecutamos estos dos procesos y nos dio un deadlock como aparece en la imagen siguiente:
 
-<img src="imagenes_readme/teracion4_imagen1_pruebaDeadlock.png"
+<img src="imagenes_readme/iteracion4_imagen1_pruebaDeadlock.png"
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
 
 Esto no termina, como es de esperar de un deadlock:
 
-<img src="imagenes_readme/teracion4_imagen2_pruebaDeadlock.png"
+<img src="imagenes_readme/iteracion4_imagen2_pruebaDeadlock.png"
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
 
