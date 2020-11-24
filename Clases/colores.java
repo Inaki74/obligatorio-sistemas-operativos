@@ -25,3 +25,29 @@ public class colores {
     // BOLD NESS
     public static final String ANSI_WHITE_BOLD = "\033[1;37m";
 }
+
+// public class colores {
+//     // TEXTOS DE COLORES
+//     public static final String ANSI_RESET = "";
+//     public static final String ANSI_BLACK = "";
+//     public static final String ANSI_RED = "";
+//     public static final String ANSI_GREEN = "";
+//     public static final String ANSI_YELLOW = "";
+//     public static final String ANSI_BLUE = "";
+//     public static final String ANSI_PURPLE = "";
+//     public static final String ANSI_CYAN = "";
+//     public static final String ANSI_WHITE = "";
+
+//     // COLORES PARA EL FONDO , USAR EL MISMO RESET QUE EL DE TEXTO
+//     public static final String ANSI_BLACK_BACKGROUND = "";
+//     public static final String ANSI_RED_BACKGROUND = "";
+//     public static final String ANSI_GREEN_BACKGROUND = "";
+//     public static final String ANSI_YELLOW_BACKGROUND = "";
+//     public static final String ANSI_BLUE_BACKGROUND = "";
+//     public static final String ANSI_PURPLE_BACKGROUND = "";
+//     public static final String ANSI_CYAN_BACKGROUND = "";
+//     public static final String ANSI_WHITE_BACKGROUND = "";
+
+//     // BOLD NESS
+//     public static final String ANSI_WHITE_BOLD = "";
+// }
