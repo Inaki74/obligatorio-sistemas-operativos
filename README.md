@@ -59,7 +59,7 @@ Ademas, decidimos agregar un código de colores al log, ya que se estaba tornand
 - Amarillo: Advertencias de procesos no finalizados y recursos aun utilizados.
 - Rojo: Errores que no deberían de ocurrir.
 
-Una vez comprobado su funcionalidad con un RSR solo, decidimos agregar casos de prueba con varios RSR. Aun no fueron implementados manejos de Deadlocks ni creacion de Procesos y Recursos.
+Una vez comprobado su funcionalidad con un RSR solo, decidimos agregar casos de prueba con varios RSR. Aun no fueron implementados manejos de Deadlocks.
 
 #### PRUEBAS:
 
