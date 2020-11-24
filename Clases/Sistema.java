@@ -14,14 +14,39 @@ public class Sistema{
 
         return _current;
     }
-    
+
+    private Particion[] particiones;
     private ArrayList<PCB> procesos = new ArrayList<PCB>();
     private ArrayList<RCB> recursos = new ArrayList<RCB>();
     private ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
     private String[][] programas;
 
-// "Pedir impresora#1", "Usar impresora#1", "Devolver impresora#1",
-//"Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2", 
+    public void crearParticiones(){
+        int cantidadProgramas = programas.length;
+
+        particiones = new Particion[cantidadProgramas];
+
+        for(int i = 0; i < cantidadProgramas; i++){
+            Particion p = new Particion(2, i);
+            particiones[i] = p;
+        }
+    }
+
+    public void asignarAMemoria(PCB proceso){
+        for(int i = 0; i < programas.length; i++){
+            if(particiones[i].getIdPrograma() == proceso.getIdPrograma()){
+                particiones[i].agregarAMemoria(proceso);
+            }
+        }
+    }
+
+    public void removerMemoria(PCB proceso){
+        for(int i = 0; i < programas.length; i++){
+            if(particiones[i].getIdPrograma() == proceso.getIdPrograma()){
+                particiones[i].removerDeMemoria(proceso);
+            }
+        }
+    }
 
     public void ImportarProgramas(){
         String[][] progs = { {"Pedir impresora#2", "Usar impresora#2", "Pedir impresora#1", "Usar impresora#1", "Devolver impresora#1", "Devolver impresora#2", "B", "A", "C"}, 
@@ -77,13 +102,13 @@ public class Sistema{
             break;
             case User:
                 permisosProgramas[0] = true;
-                //permisosProgramas[1] = false;
-                //permisosProgramas[2] = true;
+                permisosProgramas[1] = false;
+                permisosProgramas[2] = true;
             break;
             case Guest:
                 permisosProgramas[0] = false;
-                //permisosProgramas[1] = false;
-                //permisosProgramas[2] = true;
+                permisosProgramas[1] = false;
+                permisosProgramas[2] = true;
             break;
         }
         return permisosProgramas;
@@ -99,13 +124,13 @@ public class Sistema{
             break;
             case User:
                 permisosRecursos[0] = true;
-                //permisosRecursos[1] = false;
-                //permisosRecursos[2] = true;
+                permisosRecursos[1] = false;
+                permisosRecursos[2] = true;
             break;
             case Guest:
                 permisosRecursos[0] = false;
-                //permisosRecursos[1] = false;
-                //permisosRecursos[2] = true;
+                permisosRecursos[1] = false;
+                permisosRecursos[2] = true;
             break;
         }
         return permisosRecursos;
@@ -128,17 +153,24 @@ public class Sistema{
         // agregar usuario
         PCB proceso0 = new PCB(0, programas[0], 0);
         PCB proceso1 = new PCB(1, programas[0], 0);
-        PCB proceso2 = new PCB(2, programas[2], 2);
+        PCB proceso2 = new PCB(2, programas[0], 0);
         PCB proceso3 = new PCB(3, programas[1], 1);
         PCB proceso4 = new PCB(4, programas[2], 2);
-        PCB proceso5 = new PCB(5, programas[1], 2);
+        PCB proceso5 = new PCB(5, programas[1], 1);
 
         procesos.add(proceso0);
         procesos.add(proceso1);
-        // procesos.add(proceso2);
-        // procesos.add(proceso3);
-        // procesos.add(proceso4);
-        // procesos.add(proceso5);
+        procesos.add(proceso2);
+        procesos.add(proceso3);
+        procesos.add(proceso4);
+        procesos.add(proceso5);
+
+        asignarAMemoria(proceso0);
+        asignarAMemoria(proceso1);
+        asignarAMemoria(proceso2);
+        asignarAMemoria(proceso3);
+        asignarAMemoria(proceso4);
+        asignarAMemoria(proceso5);
     }
 
     public void crearUsuarios() {
@@ -163,10 +195,10 @@ public class Sistema{
     private void cargarUsuariosEnProcesos(){
         procesos.get(0).setUsuario(usuarios.get(0));
         procesos.get(1).setUsuario(usuarios.get(0));
-        // procesos.get(2).setUsuario(usuarios.get(2));
-        // procesos.get(3).setUsuario(usuarios.get(2));
-        // procesos.get(4).setUsuario(usuarios.get(0));
-        // procesos.get(5).setUsuario(usuarios.get(1));
+        procesos.get(2).setUsuario(usuarios.get(2));
+        procesos.get(3).setUsuario(usuarios.get(2));
+        procesos.get(4).setUsuario(usuarios.get(0));
+        procesos.get(5).setUsuario(usuarios.get(1));
         // for(int i=0; i < procesos.size(); i++){
         //     procesos.get(i).setUsuario(usuarios.get(2)); //por ahora todos son admin
         // }

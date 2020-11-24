@@ -239,6 +239,12 @@ public class PCB{
     public String toString(){
         return "Proceso " + id;
     }
+
+    @Override
+    public boolean equals(Object o){
+        PCB comp = (PCB)o;
+        return comp.getId() == this.id;
+    }
     // Proceso es programa en ejecucion.
     // El programa ponele que es el txt con el orden de instrucciones.
     // Proceso agarra el programa y lo ejecuta.

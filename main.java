@@ -9,11 +9,10 @@ class main{
 
         Sistema sistema = Sistema.Current();
         sistema.ImportarProgramas();
+        sistema.crearParticiones();
         sistema.crearProcesos();
         sistema.crearRecursos();
         sistema.crearUsuarios();
-        
-        sistema.cargarTodosProcesos();
 
         //Loop que use los procesos
         boolean termino = false;

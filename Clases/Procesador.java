@@ -1,7 +1,5 @@
 package Clases;
 import java.util.Queue;
-
-
 import java.util.LinkedList;
 
 public class Procesador{
@@ -42,6 +40,7 @@ public class Procesador{
         //chequear permisos
         if(!procesoActual.getUsuario().getPermisoPrograma(procesoActual.getIdPrograma())){
             System.out.println(colores.ANSI_PURPLE + "El " + procesoActual.getUsuario() + " no tiene permisos para ejecutar proceso " + procesoActual.getId()  + colores.ANSI_RESET);
+            Sistema.Current().removerMemoria(procesoActual);
             return false;
         }
         // Si esta bloqueado, no ejecutar y avisar.
@@ -64,6 +63,7 @@ public class Procesador{
             addProceso(procesoActual);
         } else {
             System.out.println(colores.ANSI_GREEN + "El " + procesoActual + " ha terminado su ejecucion."  + colores.ANSI_RESET);
+            Sistema.Current().removerMemoria(procesoActual);
         }
        
         // Retornar si terminamos
@@ -78,9 +78,5 @@ public class Procesador{
 
     public int getQuantum(){
         return quantum;
-    }
-
-    public void esperar(RCB recurso){
-        
     }
 }
