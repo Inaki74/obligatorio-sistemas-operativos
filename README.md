@@ -18,52 +18,52 @@ Nosotros para realizar la simulacion, utilizamos el lenguaje de programacion JAV
 
 Para afrontar este problema planteamos la implementación que le dariamos a cada componente del sistema:
 
-Sistema/Simulador:
+*Sistema/Simulador:*
 Esta es la clase donde se guardan todo lo vital para la simulacion del SO. Se guardan los procesos, los recursos, el grafo para detección de deadlocks, los usuarios, los programas, y es donde se simula también el reparto de memoria.
 
-Memoria:
+*Memoria:*
 Para la memoria utilizamos multiprogramación con particiones fijas. Dedicamos una partición por cada programa guardado en el codigo, esto significa que cada una de ellas posee todos los procesos resultantes de la ejecucion del programa asociado a la misma.
 
-Procesador:
+*Procesador:*
 El procesador está conformado por un scheduller el cual se maneja por una cola PEPS y la conversión de ciclos que representan un quantum del sistema. Cada instrucción se ejecuta en una cantidad de ciclos, cuando la suma de ellos llega a 1 quantum, se le quita el procesador por timeout a un proceso y se llama al siguiente en el scheduller.
 La función principal que tiene el procesador(hablando de su codigo) es la de ejecutar el proximo proceso.
 
-Procesos y recursos:
+*Procesos y recursos:*
 El sistema posee procesos y recursos estaticos. Para generar la interacción entre ellos, decidimos marcar 3 palabras clave a modo de funciones. Si una instruccion comienza con "Pedir " "Usar " o "Devolver " el sistema detecta eso y procesa la interacción con el recurso. Para especificar con que recurso ocurre esta acción luego de la palabra clave se escribe el nombre del mismo. Un ejemplo de esto seria, si quiero pedir la impresora#1, la instrucción seria "Pedir impresora#1" En caso de no tener ninguna de las palabras clave se lo toma como una instrucción asincronica.
 
-Programas:
+*Programas:*
 Los programas los interpretamos como si fuesen arrays de Strings, siendo cada una de estas una instrucción. Los programas son fijos desde la inicialización del sistema y los procesos recurren a ellos en un inicialización.
 
-Instrucciones:
+*Instrucciones:*
 Utilizamos una clase instrucciones, la cual abstrae cada linea del lenguaje, pero que a su vez la asocia con la cantidad de ciclos que consume ejecutarla. Este tiempo de ejecución lo damos de forma randomica a una instrucción, ese valor luego se mantiene durante toda la ejecución del proceso. Si a la instrucción "A" del proceso 1 se le da una duración de 2 ciclos, todas las instrucciones "A" dentro de ese programa demoraran 2 ciclos en ejecutarse.
 
-Usuarios:
+*Usuarios:*
 Para los usuarios definimos 3 templates: Admin, User, Guest. Los admin tienen acceso a todos los procesos y recursos del sistema. Los User y Guest van a ser definidos manualmente para cada caso de prueba. Se intenta mantener una consistencia entre la cantidad de permisos que tiene un User y un Guest (El Guest teniendo siempre menos permisos que el User).
 
-Detección de Deadlocks:
+*Detección de Deadlocks:*
 Llegando a las ultimas iteraciones decidimos implementar un sistema de deteccion de deadlocks. Para ello decidimos usar el metodo que nos parecia mas exhaustivo en la detección de los mismos. Para ello implementamos un grafo similar al visto en clase.
 
-Funcionamiento del grafo:
+*Funcionamiento del grafo:*
 El grafo está compuesto por nodos, los cual tienen una id y un bool que define si es un proceso o un recurso.
 Cuando se pide un recurso se genera una arista dirigida del Proceso al Recurso.
 Cuando se le da permiso al proceso para acceder a un recurso, y por ello se asigna ese proceso al recurso, se borra la arista de P -> R y se agrega la arista R -> P.
 Esto permite que detectar un ciclo en el grafo equivalga a detectar un deadlock en el sistema y gracias a esto podemos solucionarlo antes de que ocurra.
 
-Solución a Deadlock:
+*Solución a los Deadlock:*
 Si bien en un sistema operativo real esto no seria correcto de implementar. Para mantener la continuidad del sistema, matamos el proceso que genera el deadlock, aplicando un procesamiento muy similar al aplicado cuando no se tiene permiso para utilizar un recurso. Se devuelven los recursos asignados a ese proceso y se lo da por terminado, liberando su lugar de memoria y quitandolo del scheduller.
 
-Interfaz:
+*Interfaz:*
 Si bien no tenemos una interfaz propiamente dicha, tenemos un pequeño menu principal en la consola el cual permite navegar entre los distintos casos de prueba que tenemos predefinidos.
 
-Para realizar la simulacion, nosotros tuvimos un acercamiento Iterativo. Es decir, creabamos distintas versiones de la solucion y la ibamos mejorando por iteracion.
+Para realizar la simulación, nosotros tuvimos un acercamiento iterativo. Es decir, creabamos distintas versiones de la solución y la ibamos mejorando por iteración.
 
-### PRIMERA ITERACION
+### PRIMERA ITERACIÓN
 
-En la primera iteracion, definimos la base del Simulador. Creamos las clases basicas, como por ejemplo: Sistema, Procesador, PCB, RCB(base nomas), Instruccion y main.
+En la primera iteración, definimos la base del Simulador. Creamos las clases básicas, como por ejemplo: Sistema, Procesador, PCB, RCB(base nomás), Instrucción y main.
 
-Quisimos simular la dinamica de scheduling y round robin del procesador con procesos estaticos, sin recursos y un solo usuario, respetando los timeouts de los procesos. 
+Quisimos simular la dinámica de schedulling y round robin del procesador con procesos estáticos, sin recursos y un solo usuario, respetando los timeouts de los procesos. 
 
-Para ello, definimos el quantum del procesador, insertamos las instrucciones y le asignamos una cantidad de ciclos determinada pero aleatoria, el loop principal, el guardado de los procesos en sistema, sus estados (Listo y En Ejecucion) y el log en consola de los mismos.
+Para ello, definimos el quantum del procesador, insertamos las instrucciones y le asignamos una cántidad de ciclos determinada pero aleatoria, el loop principal, el guardado de los procesos en sistema, sus estados (Listo y En Ejecución) y el log en consola de los mismos.
 
 #### PRUEBAS:
 <img src="imagenes_readme/iteracion1_imagen1_pruebas.png"
@@ -74,7 +74,7 @@ Para ello, definimos el quantum del procesador, insertamos las instrucciones y l
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
 
-En la imagen a continuacion se ve parte de lo loggeado. A efectos de simplificar el README, pusimos solo partes de las ejecuciones. Para acceder a los resultados completos, ver el anexo.md.
+En la imágen a continuación se ve parte de lo loggeado. A efectos de simplificar el README, pusimos solo partes de las ejecuciones. Para acceder a los resultados completos, ver el anexo.md.
 
 <img src="imagenes_readme/iteracion1_imagen4_pruebas.png"
      alt="Markdown Monster icon"
@@ -89,7 +89,7 @@ En la segunda iteración, decidimos empezar a desarrollar el manejo de Recursos 
 
 Definimos el RCB, el estado de Bloqueado de un Proceso y sus distintas interacciones con el código ya hecho. Para controlar estas interacciones, definimos los primeros tres comandos de nuestro lenguaje: Pedir, Usar y Devolver.
 
-Ademas, decidimos agregar un código de colores al log, ya que se estaba tornando muy largo, tedioso e intentendible. A continuacion se encuentra una leyenda de los colores definidos:
+Además, decidimos agregar un código de colores al log, ya que se estaba tornando muy largo, tedioso e intentendible. A continuación se encuentra una leyenda de los colores definidos:
 
 - Verde: Manejo de Procesos y Schedulling.
 - Cyan: Cambio de estado de los Procesos.
@@ -98,7 +98,7 @@ Ademas, decidimos agregar un código de colores al log, ya que se estaba tornand
 - Amarillo: Advertencias de procesos no finalizados y recursos aun utilizados.
 - Rojo: Errores que no deberían de ocurrir.
 
-Una vez comprobado su funcionalidad con un RSR solo, decidimos agregar casos de prueba con varios RSR. Aun no fueron implementados manejos de Deadlocks.
+Una véz comprobado su funcionalidad con un RSR solo, decidimos agregar casos de prueba con varios RSR. Aún no fueron implementados manejos de Deadlocks.
 
 #### PRUEBAS:
 
@@ -118,7 +118,7 @@ Y la imágen siguiente muestra parte de los resultados de la prueba. De nuevo, l
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
 
-De nuevo, analizando el caso y los resultados, son todos favorables. Incluso un caso borde que aparece funciona como deberia. El mismo es que un Proceso entre en timeout luego de pedir un recurso, el resultado esperado es que se acceda al recurso y quede bloqueado, pero no realizando su función ya que no se le dio el comando de ser utilizado. Sucede lo esperado.
+De nuevo, analizando el caso y los resultados, son todos favorables. Incluso un caso borde que aparece funciona como debería. El mismo es que un Proceso entre en timeout luego de pedir un recurso, el resultado esperado es que se acceda al recurso y quede bloqueado, pero no realizando su función ya que no se le dio el comando de ser utilizado. Sucede lo esperado.
 
 ### TERCERA ITERACIÓN
 
@@ -282,7 +282,29 @@ Nosotros creemos que esto se debía a la randomización de las duraciones de cic
 Encontramos que habia una sucesion de casos o instrucciones especificas que al agregarse al grafo no agregaba una relacion de Recurso a Proceso, por ende avanzando sin checkear la existencia de ciclos en ese paso. Si los ciclos randómicos generaban timeout previo a la ejecucion de estas instrucciones todo funcionaba correcto (primer caso). En cambio, si no se generaba un timeout, sucedia lo explicado previamente (segundo caso). Arreglando este caso, la detección quedo funcionando correctamente.
 
 Nuevamente, valga la redundancia, el caso completo se encuentra en el archivo anexo.md.
-### N Iteracion
+### SEXTA Y ULTIMA ITERACIÓN
+
+Para esta última iteración, nos centramos en el uso del Simulador y la generación de algunos casos de pruebas. Para ello, creamos una interfaz por consola simple, pero que hace su trabajo bien.
+
+Con un simple while y un Scanner generamos la siguiente interfaz de Usuario:
+
+<img src="imagenes_readme/iteracion6_interfaz1.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+Su uso es el esperado, inserta el número e ira a otros menúes. El menú uno lleva a los casos de prueba que creamos, el dos a una breve explicacion de cada caso de prueba y el ultimo simplemente termina la ejecución.
+
+El menú uno simplemente muestra opciones sobre distintos casos de prueba, los mismos serán explicados a continuación:
+
+<img src="imagenes_readme/iteracion6_interfaz2.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+Elegir una de las opciones corre el caso de prueba y luego vuelve al menú de pruebas para iniciar otra simulación.
+
+<img src="imagenes_readme/iteracion6_interfaz3.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
 
 ### GUIA DE COLORES FINAL:
 - Verde: Manejo de Procesos y Schedulling.
@@ -290,14 +312,9 @@ Nuevamente, valga la redundancia, el caso completo se encuentra en el archivo an
 - Blanco: Ejecucion de instrucciones.
 - Blanco Fuerte (Bold): Manejo de Recursos.
 - Amarillo: Advertencias de procesos no finalizados y recursos aun utilizados.
-- Rojo: Errores que no deberían de ocurrir.
+- Rojo: Errores que no deberían de ocurrir y deadlocks.
 - Violeta: Manejo de Permisos de Usuarios.
 - Naranja: Manejo de memoria.
-
-### ESPECIALIZACION
-
-Nostros decidimos especializar nuestro SO en...
-
 
 ## PRUEBAS:
 

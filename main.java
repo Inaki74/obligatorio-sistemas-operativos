@@ -14,12 +14,12 @@ class main{
 
         System.out.println(colores.ANSI_WHITE_BOLD + " Simulador de un sistema operativo" + colores.ANSI_RESET);
         System.out.println(colores.ANSI_WHITE + "Bienvenido a la interfaz por consola" + colores.ANSI_RESET);
-        System.out.println("Hecho por " + colores.ANSI_WHITE_BOLD + "Inaki etchegaray, Matias Gonzalez y Gaston Landeira" + colores.ANSI_RESET);
+        System.out.println("Hecho por " + colores.ANSI_WHITE_BOLD + "Iñaki Etchegaray, Matías González y Gastón Landeira" + colores.ANSI_RESET);
         while(!exit){
             System.out.println("-------------------------------------------------------------");
             System.out.println("Inserte el número de opción que desea elegir");
             System.out.println("1 -> Casos de prueba");
-            System.out.println("2 -> Ayuda(Descripición de casos de ayuda)");
+            System.out.println("2 -> Descripcion de los Casos de Prueba");
             System.out.println("3 -> Salir del programa");
             //colores.ANSI_RED + "No hay mas procesos por ejecutar..." + colores.ANSI_RESET
             int entrada = scanner.nextInt();
