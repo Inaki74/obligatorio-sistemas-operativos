@@ -121,30 +121,31 @@ class main{
 
             switch (entrada){
                 case 1:
-                    System.out.println("");
+                    System.out.println("Caso que involucra dos programas que generan un deadlock básico entre dos procesos y dos recursos.");
                 break;
                 case 2:
-                    System.out.println("");
+                    System.out.println("Caso que involucra tres programas de los cuales dos generan deadlock y el tercero se involucra parcialmente.");
                 break;
                 case 3:
-                    System.out.println("");
+                    System.out.println("Caso que involucra tres programas y cinco recursos, se crean tres procesos que generan un deadlock en cadena entre ellos.");
                 break;
                 case 4:
-                    System.out.println("");
+                    System.out.println("Prueba sobre permisos de Usuarios, en el mismo generamos varios Usuarios con distintos permisos sobre distintos Procesos y Recursos.");
                 break;
                 case 5:
-                    System.out.println("");
+                    System.out.println("Prueba sobre las particiones de memoria, involucra la creación de muchos procesos con muchos programas los cuales deberían de resultar en la creación de muchas particiones distintas.");
                 break;
                 case 6:
-                    System.out.println("");
+                    System.out.println("Otra prueba sobre las particiones de memoria involucrando la creación de muchos procesos sobre el mismo programa, los cuales deberían de almacenarse en la partición a esperar por memoria.");
                 break;
                 case 7:
-                    System.out.println("");
+                    System.out.println("Una prueba general que toca un poco de todas las funcionalidades del simulador.");
                 break;
                 case 8:
                     exitAyuda = true;
                 break;
             }
+
         }
     }
 }

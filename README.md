@@ -318,7 +318,7 @@ El segundo y tercer caso involucra programas que genera deadlocks más controver
 
 // Fotos relevantes al seg y ter caso
 
-El cuarto es una prueba sobre permisos de Usuarios, en el mísmo generamos varios Usuarios con distintos permisos sobre distintos Procesos y Recursos
+El cuarto es una prueba sobre permisos de Usuarios, en el mismo generamos varios Usuarios con distintos permisos sobre distintos Procesos y Recursos
 
 // Fotos relevantes al cuarto caso
 
