@@ -122,7 +122,7 @@ De nuevo, analizando el caso y los resultados, son todos favorables. Incluso un 
 
 ### TERCERA ITERACIÓN
 
-Para esta iteración decidimos añadir manejo de permisos con usuarios. Para ello, agregamos varios usuarios estáticos con roles pre-definidos (Guest, User y Admin) los cuales poseen distintos permisos sobre distintos programas. Guest tiene permisos limitados mientras que Admin posee todos los permisos.
+Para esta iteración decidimos añadir manejo de permisos con usuarios. Para ello, agregamos varios usuarios estáticos con roles pre-definidos (Guest, User y Admin) los cuáles poseen distintos permisos sobre distintos programas. Guest tiene permisos limitados mientras que Admin posee todos los permisos.
 
 Los usuarios poseen permisos sobre Programas y sobre Recursos. Si se solicita la corrida de un Proceso que ejecuta un Programa que el usuario no posee permiso, ese Proceso se mata. Además, si tuviera permisos sobre un Programa que solicita un recurso al cuál el usuario no tiene permiso, al llegar a la línea de pedido se mata el Proceso.
 
@@ -158,7 +158,7 @@ Los datos de prueba para esta iteración fueron estáticos nuevamente. A continu
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
 
-Cabe destacar que el Admin tiene permiso para todos los programas, mientras que el User tiene permiso para dos y el Guest solo a un programa. Ademas, tal como lo muestra la imagen anterior, los procesos 0 y 4 fueron corridos por un Usuario Admin, no deberia de haber problema con el Usuario 'Matixatim'. Sin embargo, los procesos 1, 2 y 3 son corridos por un Usuario Guest, 'GL' deberia de poder correr el proceso 2, pero no el 1 y 3, ya que no tiene permisos. Los resultados se muestran a continuación:
+Cabe destacar que el Admin tiene permiso para todos los programas, mientras que el User tiene permiso para dos y el Guest sólo a un programa. Además, tal como lo muestra la imágen anterior, los procesos 0 y 4 fueron corridos por un Usuario Admin, no debería de haber problema con el Usuario 'Matixatim'. Sin embargo, los procesos 1, 2 y 3 son corridos por un Usuario Guest, 'GL' debería de poder correr el proceso 2, pero no el 1 y 3, ya que no tiene permisos. Los resultados se muestran a continuación:
 
 <img src="imagenes_readme/iteracion3_imagen7_pruebas.png"
      alt="Markdown Monster icon"
@@ -168,7 +168,7 @@ Las pruebas corren de manera esperada, el Usuario 'Matixatim' corre todos los pr
 
 ### CUARTA ITERACIÓN
 
-Antes de adentrarnos a la proxima iteracion, vale destacar que decidimos probar nuestro sistema contra un deadlock. El deadlock era muy simple:
+Antes de adentrarnos a la próxima iteración, vale destacar que decidimos probar nuestro sistema contra un deadlock. El deadlock era muy simple:
 
 - Proceso 0: 
      - Pide Impresora 1.
@@ -191,25 +191,25 @@ Esto no termina, como es de esperar de un deadlock:
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
 
-Sin embargo, en esta iteracion no quisimos adentrarnos aún en los deadlocks. En vez, quisimos antes lidiar con el tema de la memoria.
+Sin embargo, en esta iteración no quisimos adentrarnos aún en los deadlocks. En vez, quisimos antes lidiar con el tema de la memoria.
 
-Para el manejo de memoria, decidimos simular un sistema de Multiprogramación con Particiones Fijas. Como nuestra cantidad de programas es fija, decidimos hacer una particion por programa. Cada una de ellas posee todos los procesos resultantes de la ejecucion del programa asociado a la particion. Cada una de estas particiones poseen arrays representando el espacio en memoria asignado. Su largo es estatico e igual entre todas las particiones.
+Para el manejo de memoria, decidimos simular un sistema de Multiprogramación con Particiones Fijas. Como nuestra cantidad de programas es fija, decidimos hacer una partición por programa. Cada una de ellas posee todos los procesos resultantes de la ejecución del programa asociado a la partición. Cada una de estas particiones poseen arrays representando el espacio en memoria asignado. Su largo es estático e igual entre todas las particiones.
 
 El funcionamiento implementado es el siguiente:
-- Un trabajo es iniciado en ejecucion como un proceso nuevo.
+- Un trabajo es iniciado en ejecución como un proceso nuevo.
 - El proceso va a la partición asociada en memoria.
 - Si hay lugar en memoria para el Proceso:
      - Se agrega a ese lugar y al Round Robin del Procesador.
 - De lo contrario
      - Se agrega a una cola localizada en la Partición.
 
-- Si un proceso es removido en memoria por fin de ejecucion (sea por falta de permisos o si realmente termino de hacer su trabajo) se toma un proceso nuevo de la cola y se asigna a la memoria.
+- Si un proceso es removido en memoria por fin de ejecución (sea por falta de permisos o si realmente termino de hacer su trabajo) se toma un proceso nuevo de la cola y se asigna a la memoria.
 
-Nosotros nos aseguramos de logear esto, así es notable en la simulacóon. Para ello, agregamos el naranja, asociado al manejo de memoria, a nuestro lenguaje de colores.
+Nosotros nos aseguramos de logear esto, así es notable en la simulación. Para ello, agregamos el naranja, asociado al manejo de memoria, a nuestro lenguaje de colores.
 
 #### PRUEBAS:
 
-Los datos de prueba de esta iteracion siguen siendo estaticos:
+Los datos de prueba de esta iteración siguen siendo estáticos:
 
 <img src="imagenes_readme/anexo_iteracion4_casosDePruebas1.png"
      alt="Markdown Monster icon"
@@ -223,13 +223,13 @@ Los datos de prueba de esta iteracion siguen siendo estaticos:
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
 
-Notar que hay tres procesos corriendo el programa cero, nuestras particiones tienen tamaño estático en memoria de 2 en esta iteración. Por lo tanto, para que la prueba funcione bien, deben de aparecer mensajes que indiquen el guardado del proceso 2 en la lista de espera. Otra cosa a señalar es que sabemos que los programas 0 y 1 estan seteados para realizar deadlocks, pero el programa 1 no corre ya que todos los procesos asociados a el son corridos por un usuario que no tiene permiso para correrlos.
+Notar que hay tres procesos corriendo el programa cero, nuestras particiones tienen tamaño estático en memoria de 2 en esta iteración. Por lo tanto, para que la prueba funcione bien, deben de aparecer mensajes que indiquen el guardado del proceso 2 en la lista de espera. Otra cosa a señalar es que sabemos que los programas 0 y 1 estan seteados para que suceda un deadlock, pero el programa 1 no corre ya que todos los procesos asociados a él son corridos por un usuario que no tiene permiso para correrlos.
 
 <img src="imagenes_readme/anexo_iteracion4_pruebas1.png"
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
 
-Los resultados de las pruebas son satisfactorios. Tal como debia suceder, el proceso 2 fue alojado en la cola de la particion y no fue añadido a memoria. Mas tarde, cuando se va el proceso 0, el proceso 2 se agrega a memoria y al scheduler:
+Los resultados de las pruebas son satisfactorios. Tal como debía suceder, el proceso 2 fue alojado en la cola de la partición y no fue añadido a memoria. Más tarde, cuando se va el proceso 0, el proceso 2 se agrega a memoria y al scheduler:
 
 <img src="imagenes_readme/anexo_iteracion4_pruebas3.png"
      alt="Markdown Monster icon"
@@ -239,23 +239,23 @@ Nuevamente, el caso completo se encuentra en el anexo.
 
 ### QUINTA ITERACIÓN
 
-Como mencionamos previamente, nuestro simulador hasta esta iteración acepta y sufre deadlocks. Para ello, decidimos encarar este problema con una de las posibles soluciones vistas en clase: grafo de asignacion de Recursos.
+Como mencionamos previamente, nuestro simulador hasta esta iteración acepta y sufre deadlocks. Para ello, decidimos encarar este problema con una de las posibles soluciones vistas en clase: un grafo de asignación de Recursos.
 
 Implementamos una estructura de Grafo con conocimientos de la materia de Algoritmos 2 y un poco de ayuda de internet para acelerar el proceso, luego integramos el funcionamiento de este Grafo al sistema cargando Procesos y Recursos. Representamos los Procesos y Recursos por su id personal junto con un booleano que representaba si era un recurso o un proceso (ya que un proceso puede tener el mismo id que un recurso, por ser clases distintas).
 
 El funcionamiento es el siguiente:
-- Cada vez que un Proceso pide un Recurso, creamos una arista en el grafo desde el Proceso hacia el recurso representando el pedido.
-- Cada vez que se vaya a asignar Recurso a un Proceos, antes de asignarlo simulamos en el grafo que pasaria si se asigna el recurso al Proceso:
+- Cáda vez que un Proceso pide un Recurso, creamos una arista en el grafo desde el Proceso hacia el recurso representando el pedido.
+- Cáda vez que se vaya a asignar Recurso a un Proceos, antes de asignarlo simulamos en el grafo que pasaria si se asigna el recurso al Proceso:
      - Removemos la arista de Proceso a Recurso, simulamos que le es dado.
      - Agregamos la arista de Recurso a Proceso
      - Vemos si posee un ciclo:
           - Si tiene, se mata el proceso, logeamos que se detecto un Deadlock y que se mato un proceso (en color rojo).
           - Si no tiene, lo dejamos obtener el Recurso.
-- Cada vez que un Proceso devuelve un Recurso, se saca la arista de Recurso a Proceso, el ciclo de vida del Proceso en el grafo ha acabado.
+- Cáda vez que un Proceso devuelve un Recurso, se saca la arista de Recurso a Proceso, el cíclo de vida del Proceso en el grafo ha acabado.
 
-El deadlock se produce cuando se encuentra un ciclo en el grafo de asignaciones. El ciclo significa deadlock porque representa como un Proceso 1 esta esperando por un Recurso 1 siendo utilizado por Proceso 2 que esta esperando por un Recurso 2 siendo utilizado por Proceso 1, esto nunca terminara ya que ambos estan bloqueados, el sistema al encontrar estos ciclos, predice correctamente lo que va a suceder y lo evita.
+El deadlock se produce cuando se encuentra un cíclo en el grafo de asignaciones. El cíclo significa deadlock porque representa como un Proceso 1 esta esperando por un Recurso 1 siendo utilizado por Proceso 2 que esta esperando por un Recurso 2 siendo utilizado por Proceso 1, esto núnca terminará ya que ambos están bloqueados, el sistema al encontrar estos ciclos, predice correctamente lo que va a suceder y lo évita.
 
-Tambien vale la pena destacar que el grafo es inicializado con todos los procesos y recursos a disposicion del Sistema Operativo. Entendemos que en un Sistema Operativo Genérico real, la operacion de buscado de ciclo seria muy costosa, pero para nuestro simulador nos pareció la mejor alternativa a tomar.
+También vale la pena destacar que el grafo es inicializado con todos los procesos y recursos a disposición del Sistema Operativo. Entendémos que en un Sistema Operativo Genérico real, la operación de buscado de cíclo sería muy costosa, pero para nuestro simulador nos pareció la mejor alternativa a tomar.
 
 #### PRUEBAS:
 
@@ -277,14 +277,14 @@ SEGUNDO CASO:
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
 
-Nosotros creemos que esto se debía a la randomización de las duraciones de ciclos por procesos, a veces daba un caso "lindo" y otras un caso "feo". Pero esto tambien significaba que habian casos que todavia no funcionaba correctamente, tuvimos que revisar el código y ver que nos faltaba.
+Nosotros creemos que esto se debía a la randomización de las duraciones de ciclos por procesos, a veces daba un caso "lindo" y otras un caso "feo". Pero esto también significaba que habían casos que todavia no funcionaba correctamente, tuvimos que revisar el código y ver que nos faltaba.
 
-Encontramos que habia una sucesion de casos o instrucciones especificas que al agregarse al grafo no agregaba una relacion de Recurso a Proceso, por ende avanzando sin checkear la existencia de ciclos en ese paso. Si los ciclos randómicos generaban timeout previo a la ejecucion de estas instrucciones todo funcionaba correcto (primer caso). En cambio, si no se generaba un timeout, sucedia lo explicado previamente (segundo caso). Arreglando este caso, la detección quedo funcionando correctamente.
+Encontramos que habia una sucesión de casos o instrucciones específicas que al agregarse al grafo no agregaba una relación de Recurso a Proceso, por ende avanzando sin checkear la existencia de cíclos en ese paso. Si la cantidad de cíclos randómicos corridos por la instrucción generaban timeout previo a la ejecución de estas instrucciones todo funcionaba correcto (primer caso). En cambio, si no se generaba un timeout, sucedia lo explicado previamente (segundo caso). Arreglando este caso, la detección quedo funcionando correctamente.
 
 Nuevamente, valga la redundancia, el caso completo se encuentra en el archivo anexo.md.
 ### SEXTA Y ULTIMA ITERACIÓN
 
-Para esta última iteración, nos centramos en el uso del Simulador y la generación de algunos casos de pruebas. Para ello, creamos una interfaz por consola simple, pero que hace su trabajo bien.
+Para esta última iteración, nos centramos en el uso del Simulador y la generación de algunos casos de pruebas. Para ello, creamos una interfaz por consola simple, pero que hace su trabajo bien. Además, cambiamos las instrucciones a un lenguaje natural envez de abstracto.
 
 Con un simple while y un Scanner generamos la siguiente interfaz de Usuario:
 
@@ -292,7 +292,7 @@ Con un simple while y un Scanner generamos la siguiente interfaz de Usuario:
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
 
-Su uso es el esperado, inserta el número e ira a otros menúes. El menú uno lleva a los casos de prueba que creamos, el dos a una breve explicacion de cada caso de prueba y el ultimo simplemente termina la ejecución.
+Su uso es el esperado, inserta el número e irá a otros menúes. El menú uno lleva a los casos de prueba que creamos, el dos a una breve explicación de cada caso de prueba y el ultimo simplemente termina la ejecución.
 
 El menú uno simplemente muestra opciones sobre distintos casos de prueba, los mismos serán explicados a continuación:
 
@@ -300,13 +300,41 @@ El menú uno simplemente muestra opciones sobre distintos casos de prueba, los m
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
 
-Elegir una de las opciones corre el caso de prueba y luego vuelve al menú de pruebas para iniciar otra simulación.
+Elegír una de las opciones corre el caso de prueba y luego vuelve al menú de pruebas para iniciar otra simulación.
 
 <img src="imagenes_readme/iteracion6_interfaz3.png"
      alt="Markdown Monster icon"
      style="float: left; margin-right: 10px;" />
 
-### GUIA DE COLORES FINAL:
+#### PRUEBAS:
+
+Generamos siete distintos casos de prueba:
+
+El primer caso involucra programas que generan el deadlock básico que vimos en la iteración 4.
+
+// Fotos relevantes al primer caso
+
+El segundo y tercer caso involucra programas que genera deadlocks más controvertidos, en los cuáles más recursos están involucrados y la ejecución es más mezclada.
+
+// Fotos relevantes al seg y ter caso
+
+El cuarto es una prueba sobre permisos de Usuarios, en el mísmo generamos varios Usuarios con distintos permisos sobre distintos Procesos y Recursos
+
+// Fotos relevantes al cuarto caso
+
+El quinto es una prueba sobre el sistema de particiones en memoria. Generamos muchos procesos con programas cortos y esperamos que alamacene todos y deje algunos en espera.
+
+// Fotos relevantes al quinto caso
+
+El sexto es otra prueba de memoria, pero un poco más extrema. Creamos 11 procesos de un mismo programa, esto debería de degenerar la ejecución a una lista de espera en la partición.
+
+// Fotos relevantes al sexto caso
+
+La séptima y última prueba es más general é involucra varios de estos elementos al mismo tiempo.
+
+// Fotos relevantes al ultimo caso
+
+### GUÍA DE COLORES FINAL:
 - Verde: Manejo de Procesos y Schedulling.
 - Cyan: Cambio de estado de los Procesos.
 - Blanco: Ejecucion de instrucciones.
@@ -315,63 +343,3 @@ Elegir una de las opciones corre el caso de prueba y luego vuelve al menú de pr
 - Rojo: Errores que no deberían de ocurrir y deadlocks.
 - Violeta: Manejo de Permisos de Usuarios.
 - Naranja: Manejo de memoria.
-
-## PRUEBAS:
-
-### CASOS DE PRUEBA PROPORCIONADOS: (Datos cargados)
-
-
-
-
-## CLASES
-
-Proceso ejecuta programa
-
-Programa = lista de Instrucciones = texto => programa lista de texto
-
-Sistema -> Singleton  <— procesador
-Proceso -> Hay que identificar todo lo que tienen los procesos.
-Recurso <— Serialmente Reutilizable y No Reutilizable
-Procesador extends Recurso <--- Singleton
-Usuario(permiso) 		En una version mas adelantada, pueden tener contraseña y tienen que ser creados, por ahora ya van a estar cargados.
-
-Sistema -> proceso -> usuario
-
-### Sistema:
-- La clase principal.
-- Tiene una lista de Usuarios, de Procesos y Recursos.
-- Da el procesador (avisa de esto) y avisa que fue devuelto.
-- Matriz de permisos
-
-### Proceso
-- Comparten el procesador.
-- Tienen que ser sincronizados respecto a los recursos.
-- Solicitan y “Utilizan” recursos (con un system.log) y después lo “devuelven”.
-- Tiene código adentro. (Lista de instrucciones?) Un super string.
-- Tiempo de ejecución.
-- Si el proceso pide un recurso y se encuentra utilizado, debe de esperar a que se libere.
-
-### Recurso
-- Tienen mutua exclusión.
-- Son utilizados por los procesos.
-- Timeout?
-- Pueden estar ocupados.
-
-### Procesador
-- Es un recurso concurrente.
-- Procesos los toman, lo utilizan por algunos ciclos.
-
-### Usuario
-- Existe
-- Tiene permisos
-- Contraseña y nombre ?
-
-Alice : Proceso
-Impresora : Recurso
-
-### PREGUNTAS:
-
-- Tomamos el procesador como un recurso? Tiene mutua exclusion?
-- Son los programas un texto largo, un pseudocódigo, o tiene que realmente hacer cosas? Código existente?
-- Simulamos tiempos de espera? (Ejemplo, si simulamos uso de una impresora, hacemos un timeout artificial?)
-- Mutua exclusion, limita necesariamente a ser utilizado por un solo proceso? Ejemplo de patio
