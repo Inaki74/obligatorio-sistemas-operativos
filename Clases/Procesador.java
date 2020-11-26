@@ -48,7 +48,7 @@ public class Procesador{
             terminoProceso = procesoActual.ejecutar();
         } else {
             System.out.println(colores.ANSI_YELLOW + "El " + procesoActual + " sigue bloqueado."  + colores.ANSI_RESET);
-            System.out.println(colores.ANSI_YELLOW + "El recurso sigue en uso."  + colores.ANSI_RESET);
+            System.out.println(colores.ANSI_WHITE_BOLD + "El recurso sigue en uso."  + colores.ANSI_RESET);
         }
 
         // Si no termino el proceso, agregarlo de nuevo al scheduler

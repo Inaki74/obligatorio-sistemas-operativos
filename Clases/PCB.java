@@ -102,7 +102,7 @@ public class PCB{
         }
 
         if(estadoNuevo == Estado.Bloqueado && estadoAnterior == Estado.EnEjecucion) {
-            return " por uso de recurso (E/S)";
+            return " por uso/espera de recurso (E/S)";
         }
 
         if(estadoNuevo == Estado.Listo && estadoAnterior == Estado.Bloqueado){
@@ -187,7 +187,7 @@ public class PCB{
             " no se encuentra disponible." + colores.ANSI_RESET);
             // p -> r
             // Aca surge el problema
-            if(this.id == 3 && programa[linea] == "Pedir impresora#2"){
+            if(this.id == 3 && programa[linea] == "Pedir impresora#2"){ //borrar desp
 
 
             }
@@ -210,10 +210,26 @@ public class PCB{
     }
 
     private void usarRecurso (String nombre) {
+        Sistema sistema = Sistema.Current();
+        RCB recurso = sistema.getRCB(nombre);
+
         cambiarEstado("Bloqueado");
         RCB comp = new RCB(nombre, 0);
         int indexOfComp = recursosUtilizados.indexOf(comp);
         recursosUtilizados.get(indexOfComp).setUso(true);
+        
+        if(sistema.hayArista(this.id, true, recurso.getId(), false)){
+            sistema.removerArista(this.id, true, recurso.getId(), false);
+            sistema.agregarAristaAGrafo(recurso.getId(), false, this.id, true);
+            if(sistema.verCiclo(this.id, true)){
+                sistema.removerArista(recurso.getId(), false, this.id, true);
+                System.out.println(colores.ANSI_RED + "DEADLOCK DETECTADO: Para pedido de " + recurso.getNombre() +
+                 " hacia " + this.toString() + colores.ANSI_RESET);
+                // Matar proceso
+                matarProceso();
+                return;
+            }
+        }
     }
 
 //PEDIS estaba vacio -> Usar E/S vuelvo -> hago cosas -> paseo el perro -> Devolver?
@@ -232,6 +248,7 @@ public class PCB{
 
     private void matarProceso(){
         Sistema sistema = Sistema.Current();
+        System.out.println(colores.ANSI_RED + "Se mata al " + toString() + colores.ANSI_RESET); 
         for(int i = 0; i < recursosUtilizados.size(); i++){
             RCB comp = new RCB(recursosUtilizados.get(i).getNombre(), 0);
             int indexOfComp = recursosUtilizados.indexOf(comp);
@@ -243,8 +260,6 @@ public class PCB{
             found.removerProceso();
         }
         recursosUtilizados.clear();
-
-        System.out.println(colores.ANSI_RED + "Se mata al " + toString() + colores.ANSI_RESET); 
         linea = programa.length - 1;
     }
 
