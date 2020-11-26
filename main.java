@@ -1,7 +1,5 @@
 import Clases.Sistema;
-
 import java.util.Scanner;
-
 import Clases.Procesador;
 import Clases.colores;
 
@@ -46,18 +44,18 @@ class main{
         while(!exitPrueba){
             System.out.println("");
             System.out.println("Inserte el numero de opcion que desea elegir");
-            System.out.println("1 -> Prueba deadlocks");
-            System.out.println("2 -> ");
+            System.out.println("1 -> Prueba deadlocks1");
+            System.out.println("2 -> Prueba deadlocks2");
             System.out.println("3 -> Salir de los cassos de prueba");
 
             int entrada = scanner.nextInt();
             
             switch (entrada){
                 case 1:
-                    sistema.casosPruebaDeadlocksMinimo();
+                    sistema.casosPruebaDeadlocks1();
                 break;
                 case 2:
-                    
+                    sistema.casosPruebaDeadlocks2();
                 break;
                 case 3:
                     exitPrueba = true;
@@ -82,8 +80,8 @@ class main{
         while(!exitAyuda){
             System.out.println("");
             System.out.println("Inserte el numero de opcion que desea elegir");
-            System.out.println("1 -> ");
-            System.out.println("2 -> ");
+            System.out.println("1 -> casosPruebaDeadlocks1 explicacion");
+            System.out.println("2 -> casosPruebaDeadlocks2 explicacion");
             System.out.println("3 -> Salir de la ayuda");
 
             int entrada = scanner.nextInt();

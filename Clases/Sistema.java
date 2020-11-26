@@ -22,18 +22,42 @@ public class Sistema{
     private ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
     private String[][] programas;
 
-    /**
-     * Cada vez que se pide un recurso, linkeamos de proceso a recurso   P -> R
-     * Cada vez que se asigna un recurso a un proceso   R -> P
-     * Una vez que un proceso empieza a usar un recurso que le fue asignado, se saca la arista     P -/> R;
-     * Una vez que un proceso devuelve un recurso, se saca la arista    R -/> P.
-     * Antes de asignar un recurso a un proceso, antes se simula en el grafo que pasaria si ocurre
-     *  Ahi nos fijamos si hay un ciclo
-     *      Si hay, matamos proceso (y logeamos)
-     *      Si no, lo dejamos pasar
-     */
+    public void casosPruebaDeadlocks1(){
+        //Importar programas
+        String[][] importarProgs = {{"Pedir impresora#2","B","C","A","B","B", "Pedir impresora#1", "Usar impresora#2", "Usar impresora#1", "Devolver impresora#1", "Devolver impresora#2", "B", "A", "C"}, 
+                                {"A","Pedir impresora#1", "A", "D", "B", "A", "Pedir impresora#2","B","C", "Usar impresora#2", "Usar impresora#1", "Devolver impresora#2", "Devolver impresora#1", "B", "A", "C"}};
+                              
+        programas = importarProgs;
+        //importar recursos y anadirlos con su tiempo de espera
+        String[] listaRecursos = {"impresora#1", "impresora#2"};
+        RCB recurso1 = new RCB(listaRecursos[0], 4);
+        RCB recurso2 = new RCB(listaRecursos[1], 2);
+        recursos.add(recurso1);
+        recursos.add(recurso2);
+        // Crear procesos y los asigna a memoria
+        PCB proceso0 = new PCB(0, programas[0], 0);
+        PCB proceso1 = new PCB(1, programas[1], 1);
+        procesos.add(proceso0);
+        procesos.add(proceso1);
+        crearParticiones();
+        asignarAMemoria(proceso0);
+        asignarAMemoria(proceso1);
+        //importar Usuarios y cargarlos en procesos
+        String[] importarUsuarios = {"Matixatim Admin"};
+        for(int i=0; i<importarUsuarios.length; i++){
+            String usuario[] = importarUsuarios[i].split(" ");
+            boolean[] permisosRecursos = devolverPermisosRecursosCasoX(definirPerfil(usuario[1]));
+            boolean[] permisosProgramas = devolverPermisosProgramasCasoX(definirPerfil(usuario[1]));
+            Usuario newUsuario = new Usuario(usuario[0], permisosRecursos, permisosProgramas);
+            usuarios.add(newUsuario);
+        }
+        procesos.get(0).setUsuario(usuarios.get(0));
+        procesos.get(1).setUsuario(usuarios.get(0));
+        //grafo 
+        inicializarGrafo();
+    }
 
-    public void casosPruebaDeadlocksMinimo(){
+    public void casosPruebaDeadlocks2(){
         //Importar programas
         String[][] importarProgs = {{"Pedir impresora#2","B","C","A","B","B", "Pedir impresora#1", "Usar impresora#2", "Usar impresora#1", "Devolver impresora#1", "Devolver impresora#2", "B", "A", "C"}, 
                                 {"A","Pedir impresora#1", "A", "D", "B", "A", "Pedir impresora#3","Usar impresora#3", "Devolver impresora#3","C", "B", "A", "C", "B", "A", "C", "Usar impresora#1", "Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2", "Devolver impresora#1", "E"}, 
@@ -73,6 +97,8 @@ public class Sistema{
         //grafo 
         inicializarGrafo();
     }
+
+
 
     public boolean[] devolverPermisosProgramasCasoX(Perfiles p){
         boolean[] permisosProgramas = new boolean[programas.length];
@@ -117,7 +143,6 @@ public class Sistema{
         }
         return permisosRecursos;
     }
-//
 
     // Get recurso
     public RCB getRCB (String nombre) {
@@ -167,6 +192,8 @@ public class Sistema{
         recursos.clear();
         usuarios.clear();
         grafoAsignacionRecursos.vaciarGrafo();
+        RCB recurso = new RCB("reset", 1);
+        recurso.resetID();
         // String[][] programas;
         // particiones[]
     }
@@ -262,3 +289,42 @@ public class Sistema{
         }
     }
 }
+
+        // //Importar programas
+        // String[][] importarProgs = {{"Pedir impresora#2","B","C","A","B","B", "Pedir impresora#1", "Usar impresora#2", "Usar impresora#1", "Devolver impresora#1", "Devolver impresora#2", "B", "A", "C"}, 
+        //                         {"A","Pedir impresora#1", "A", "D", "B", "A", "Pedir impresora#3","Usar impresora#3", "Devolver impresora#3","C", "B", "A", "C", "B", "A", "C", "Usar impresora#1", "Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2", "Devolver impresora#1", "E"}, 
+        //                         {"P", "P","Pedir impresora#3", "L", "F", "Usar impresora#3", "Devolver impresora#3", "A", "D", "D", "F", "A"}};
+        // programas = importarProgs;
+        // //importar recursos y anadirlos con su tiempo de espera
+        // String[] listaRecursos = {"impresora#1", "impresora#2", "impresora#3"};
+        // RCB recurso1 = new RCB(listaRecursos[0], 4);
+        // RCB recurso2 = new RCB(listaRecursos[1], 2);
+        // RCB recurso3 = new RCB(listaRecursos[2], 6);
+        // recursos.add(recurso1);
+        // recursos.add(recurso2);
+        // recursos.add(recurso3);
+        // // Crear procesos y los asigna a memoria
+        // PCB proceso0 = new PCB(0, programas[0], 0);
+        // PCB proceso1 = new PCB(1, programas[1], 1);
+        // PCB proceso2 = new PCB(2, programas[2], 2);
+        // procesos.add(proceso0);
+        // procesos.add(proceso1);
+        // procesos.add(proceso2);
+        // crearParticiones();
+        // asignarAMemoria(proceso0);
+        // asignarAMemoria(proceso1);
+        // asignarAMemoria(proceso2);
+        // //importar Usuarios y cargarlos en procesos
+        // String[] importarUsuarios = {"Matixatim Admin", "Inaki.exe User", "GL Guest", "Caffa Admin"};
+        // for(int i=0; i<importarUsuarios.length; i++){
+        //     String usuario[] = importarUsuarios[i].split(" ");
+        //     boolean[] permisosRecursos = devolverPermisosRecursosCasoX(definirPerfil(usuario[1]));
+        //     boolean[] permisosProgramas = devolverPermisosProgramasCasoX(definirPerfil(usuario[1]));
+        //     Usuario newUsuario = new Usuario(usuario[0], permisosRecursos, permisosProgramas);
+        //     usuarios.add(newUsuario);
+        // }
+        // procesos.get(0).setUsuario(usuarios.get(0));
+        // procesos.get(1).setUsuario(usuarios.get(0));
+        // procesos.get(2).setUsuario(usuarios.get(0));
+        // //grafo 
+        // inicializarGrafo();

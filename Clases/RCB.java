@@ -85,4 +85,8 @@ public class RCB{
         RCB comp = (RCB)a;
         return comp.getNombre().equals(this.nombre);
     }
+
+    public void resetID(){
+        idNumero = 0;
+    }
 }
