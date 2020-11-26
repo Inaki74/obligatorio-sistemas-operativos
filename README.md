@@ -12,7 +12,7 @@
 
 ## TECNOLOGIA:
 
-Nosotros para realizar la simulacion, utilizamos el lenguaje de programacion JAVA en su última version (buscarversion). Codificamos en VSCode y mantuvimos un versionado por un repositorio en GitHub.
+Nosotros para realizar la simulacion, utilizamos el lenguaje de programacion JAVA en su última version java 11.0.9. Codificamos en VSCode y mantuvimos un versionado por un repositorio en GitHub.
 
 ## ACERCAMIENTO AL PROBLEMA
 
