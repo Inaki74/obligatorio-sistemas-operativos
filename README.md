@@ -198,6 +198,51 @@ Los resultados de las pruebas son satisfactorios. Tal como debia suceder, el pro
 
 Nuevamente, el caso completo se encuentra en el anexo.
 
+### QUINTA ITERACIÓN
+
+Como mencionamos previamente, nuestro simulador hasta esta iteración acepta y sufre deadlocks. Para ello, decidimos encarar este problema con una de las posibles soluciones vistas en clase: grafo de asignacion de Recursos.
+
+Implementamos una estructura de Grafo con conocimientos de la materia de Algoritmos 2 y un poco de ayuda de internet para acelerar el proceso, luego integramos el funcionamiento de este Grafo al sistema cargando Procesos y Recursos. Representamos los Procesos y Recursos por su id personal junto con un booleano que representaba si era un recurso o un proceso (ya que un proceso puede tener el mismo id que un recurso, por ser clases distintas).
+
+El funcionamiento es el siguiente:
+- Cada vez que un Proceso pide un Recurso, creamos una arista en el grafo desde el Proceso hacia el recurso representando el pedido.
+- Cada vez que se vaya a asignar Recurso a un Proceos, antes de asignarlo simulamos en el grafo que pasaria si se asigna el recurso al Proceso:
+     - Removemos la arista de Proceso a Recurso, simulamos que le es dado.
+     - Agregamos la arista de Recurso a Proceso
+     - Vemos si posee un ciclo:
+          - Si tiene, se mata el proceso, logeamos que se detecto un Deadlock y que se mato un proceso (en color rojo).
+          - Si no tiene, lo dejamos obtener el Recurso.
+- Cada vez que un Proceso devuelve un Recurso, se saca la arista de Recurso a Proceso, el ciclo de vida del Proceso en el grafo ha acabado.
+
+El deadlock se produce cuando se encuentra un ciclo en el grafo de asignaciones. El ciclo significa deadlock porque representa como un Proceso 1 esta esperando por un Recurso 1 siendo utilizado por Proceso 2 que esta esperando por un Recurso 2 siendo utilizado por Proceso 1, esto nunca terminara ya que ambos estan bloqueados, el sistema al encontrar estos ciclos, predice correctamente lo que va a suceder y lo evita.
+
+Tambien vale la pena destacar que el grafo es inicializado con todos los procesos y recursos a disposicion del Sistema Operativo. Entendemos que en un Sistema Operativo Genérico real, la operacion de buscado de ciclo seria muy costosa, pero para nuestro simulador nos pareció la mejor alternativa a tomar.
+
+#### PRUEBAS:
+
+Los casos de prueba fueron los mismos para la iteración anterior, pero esta vez el deadlock corre y está seteado:
+
+<img src="imagenes_readme/anexo_iteracion4_casosDePruebas3.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+Nos sucedió que nuestro sistema funcionaba correctamente algunas veces y otras veces no. 
+
+PRIMER CASO:
+<img src="imagenes_readme/iteracion5_deadlockCorrecto.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+SEGUNDO CASO:
+<img src="imagenes_readme/iteracion5_deadlockIncorrecto.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+Nosotros creemos que esto se debía a la randomización de las duraciones de ciclos por procesos, a veces daba un caso "lindo" y otras un caso "feo". Pero esto tambien significaba que habian casos que todavia no funcionaba correctamente, tuvimos que revisar el código y ver que nos faltaba.
+
+Encontramos que habia una sucesion de casos o instrucciones especificas que al agregarse al grafo no agregaba una relacion de Recurso a Proceso, por ende avanzando sin checkear la existencia de ciclos en ese paso. Si los ciclos randómicos generaban timeout previo a la ejecucion de estas instrucciones todo funcionaba correcto (primer caso). En cambio, si no se generaba un timeout, sucedia lo explicado previamente (segundo caso). Arreglando este caso, la detección quedo funcionando correctamente.
+
+Nuevamente, valga la redundancia, el caso completo se encuentra en el archivo anexo.md.
 ### N Iteracion
 
 ### GUIA DE COLORES FINAL:

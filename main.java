@@ -10,12 +10,13 @@ class main{
         new Sistema();
         new Procesador();
 
+        Sistema sistema = Sistema.Current();
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
         //ponerle colores
         System.out.println(colores.ANSI_WHITE_BOLD + " Simulador de un sistema operativo" + colores.ANSI_RESET);
         System.out.println(colores.ANSI_WHITE + "Bienvenido a la interfaz por consola" + colores.ANSI_RESET);
-        System.out.println("Hecho por " + colores.ANSI_WHITE_BOLD + "Inaki etchegarray, Matias Gonzalez y Gaston Landeira" + colores.ANSI_RESET);
+        System.out.println("Hecho por " + colores.ANSI_WHITE_BOLD + "Inaki etchegaray, Matias Gonzalez y Gaston Landeira" + colores.ANSI_RESET);
         while(!exit){
             System.out.println("-------------------------------------------------------------");
             System.out.println("Inserte el numero de opcion que desea elegir");
@@ -27,7 +28,7 @@ class main{
             
             switch (entrada){
                 case 1:
-                    menuPrueba(scanner);
+                    menuPrueba(scanner, sistema);
                 break;
                 case 2:
                     menuAyuda(scanner);
@@ -37,29 +38,71 @@ class main{
                 break;
             }
         }
-        scanner.close();
-
-        Sistema sistema = Sistema.Current();
-        sistema.ImportarProgramas();
-        sistema.crearParticiones();
-        sistema.crearProcesos();
-        sistema.crearRecursos();
-        sistema.inicializarGrafo();
-        sistema.crearUsuarios();
-
-        //Loop que use los procesos
-        boolean termino = false;
-        while(!termino) {
-            termino = Procesador.Current().ejecutarProximoProceso();
-
-            sistema.avanzarRecursos();
-        }
-
-        System.out.println(colores.ANSI_RED + "No hay mas procesos por ejecutar..." + colores.ANSI_RESET);
-        System.out.println(colores.ANSI_RED + "EXIT" + colores.ANSI_RESET);
+        scanner.close();   
     }
 
+    public static void menuPrueba(Scanner scanner, Sistema sistema){
+        boolean exitPrueba = false;
+        while(!exitPrueba){
+            System.out.println("");
+            System.out.println("Inserte el numero de opcion que desea elegir");
+            System.out.println("1 -> Prueba deadlocks");
+            System.out.println("2 -> ");
+            System.out.println("3 -> Salir de los cassos de prueba");
 
+            int entrada = scanner.nextInt();
+            
+            switch (entrada){
+                case 1:
+                    sistema.casosPruebaDeadlocksMinimo();
+                break;
+                case 2:
+                    
+                break;
+                case 3:
+                    exitPrueba = true;
+                break;
+            }
+            if(!exitPrueba){
+                boolean termino = false;
+                while(!termino) {
+                    termino = Procesador.Current().ejecutarProximoProceso();
+        
+                    sistema.avanzarRecursos();
+                }
+                System.out.println(colores.ANSI_RED + "No hay mas procesos por ejecutar..." + colores.ANSI_RESET);
+                System.out.println(colores.ANSI_RED + "EXIT" + colores.ANSI_RESET);
+                sistema.resetSistema();
+            }
+        }
+    }
+
+    public static void menuAyuda(Scanner scanner){
+        boolean exitAyuda = false;
+        while(!exitAyuda){
+            System.out.println("");
+            System.out.println("Inserte el numero de opcion que desea elegir");
+            System.out.println("1 -> ");
+            System.out.println("2 -> ");
+            System.out.println("3 -> Salir de la ayuda");
+
+            int entrada = scanner.nextInt();
+            
+            switch (entrada){
+                case 1:
+                    
+                break;
+                case 2:
+                    
+                break;
+                case 3:
+                    exitAyuda = true;
+                break;
+            }
+        }
+    }
+
+    
     /**
      * Logica de usuario:
      * El usuario tiene permisos a procesos y recursos, para esto necesitamos
@@ -78,53 +121,4 @@ class main{
      * Fijarse si el usuario tiene permiso para usar el recurso, si no lo tiene, llamar a matarProceso, y sacar proceso de Round Robin 
      */
 
-    public static void menuPrueba(Scanner scanner){
-        boolean exitPrueba = false;
-        while(!exitPrueba){
-            System.out.println("");
-            System.out.println("Inserte el numero de opcion que desea elegir");
-            System.out.println("1 -> ");
-            System.out.println("2 -> ");
-            System.out.println("3 -> Salir del programa");
-
-            int entrada = scanner.nextInt();
-            
-            switch (entrada){
-                case 1:
-                    
-                break;
-                case 2:
-                    
-                break;
-                case 3:
-                    exitPrueba = true;
-                break;
-            }
-        }
-    }
-
-    public static void menuAyuda(Scanner scanner){
-        boolean exitAyuda = false;
-        while(!exitAyuda){
-            System.out.println("");
-            System.out.println("Inserte el numero de opcion que desea elegir");
-            System.out.println("1 -> ");
-            System.out.println("2 -> ");
-            System.out.println("3 -> Salir del programa");
-
-            int entrada = scanner.nextInt();
-            
-            switch (entrada){
-                case 1:
-                    
-                break;
-                case 2:
-                    
-                break;
-                case 3:
-                    exitAyuda = true;
-                break;
-            }
-        }
-    }
 }

@@ -55,17 +55,6 @@ public class Grafo {
 
     public void addEdge(Vertex v1, Vertex v2) {
         adjVertices.get(v1).add(v2);
-        
-        // List<Vertex> adj = adjVertices.get(v1);
-        // if(adj == null){
-        //     // adj = new LinkedList<Vertex>();
-        //     // adj.add(v2);
-        //     // adjVertices.replace
-        //     // adjVertices.replace(v1, null, adj);
-        // }else{
-        //     adj.add(v2);
-        // }
-        
     }
 
     public void removeEdge(Vertex v1, Vertex v2) {
@@ -78,8 +67,7 @@ public class Grafo {
     }
 
     // Esto solo funciona en esta simulacion.
-    public boolean esCiclico(Vertex principio)
-    { 
+    public boolean esCiclico(Vertex principio) { 
         boolean primeraVez = true;
         Queue<Vertex> q = new LinkedList<>();
         q.add(principio);
@@ -99,9 +87,13 @@ public class Grafo {
                     q.add(v);
                 }
             }
-            
         }
-
         return false; 
+    }
+
+    public void vaciarGrafo() { //lo deja limpio para el proximo caso de prueba
+        adjVertices.clear();
+        vertices.clear();
+        cantVertices = 0;
     }
 }
