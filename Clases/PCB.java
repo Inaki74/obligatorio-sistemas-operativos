@@ -1,7 +1,6 @@
 package Clases;
 import java.util.ArrayList;
 import java.util.Random;
-import Clases.colores;
 
 public class PCB{
     public PCB(int ids, String[] prog, int idProg){
@@ -185,13 +184,7 @@ public class PCB{
         }else{
             System.out.println(colores.ANSI_WHITE_BOLD + recurso.getNombre() +
             " no se encuentra disponible." + colores.ANSI_RESET);
-            // p -> r
-            // Aca surge el problema
-            if(this.id == 3 && programa[linea] == "Pedir impresora#2"){ //borrar desp
-
-
-            }
-
+            
             sistema.agregarAristaAGrafo(this.id, true, recurso.getId(), false);
             if(sistema.verCiclo(this.id, true)){
                 sistema.removerArista(this.id, true, recurso.getId(), false);
@@ -217,7 +210,7 @@ public class PCB{
         RCB comp = new RCB(nombre, 0);
         int indexOfComp = recursosUtilizados.indexOf(comp);
         recursosUtilizados.get(indexOfComp).setUso(true);
-        
+
         if(sistema.hayArista(this.id, true, recurso.getId(), false)){
             sistema.removerArista(this.id, true, recurso.getId(), false);
             sistema.agregarAristaAGrafo(recurso.getId(), false, this.id, true);
