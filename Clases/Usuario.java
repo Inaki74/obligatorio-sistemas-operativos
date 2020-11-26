@@ -24,7 +24,6 @@ public class Usuario {
     public boolean getPermisoPrograma (int idPrograma){
         return permisosPrograma[idPrograma];
     }
-//hacer set si desp lo necesitamos
 
     public String nombre; // fork(), stackalloc(), 
     public boolean[] permisosRecurso;

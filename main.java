@@ -21,7 +21,7 @@ class main{
             System.out.println("1 -> Casos de prueba");
             System.out.println("2 -> Descripcion de los Casos de Prueba");
             System.out.println("3 -> Salir del programa");
-            //colores.ANSI_RED + "No hay mas procesos por ejecutar..." + colores.ANSI_RESET
+
             int entrada = scanner.nextInt();
             
             switch (entrada){
@@ -55,7 +55,11 @@ class main{
             System.out.println("");
 
             int entrada = scanner.nextInt();
-            
+            System.out.println("");
+
+            if(entrada >= 1 && entrada <= 7){
+                System.out.println(colores.ANSI_WHITE_BOLD + "Inicio de ejecución" + colores.ANSI_RESET);
+            }
             switch (entrada){
                 case 1:
                     sistema.casosPruebaDeadlocks1();
@@ -112,7 +116,8 @@ class main{
             System.out.println("");
 
             int entrada = scanner.nextInt();
-            
+            System.out.println("");
+
             switch (entrada){
                 case 1:
                     System.out.println("");

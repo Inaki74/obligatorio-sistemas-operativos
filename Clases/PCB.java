@@ -225,7 +225,6 @@ public class PCB{
         }
     }
 
-//PEDIS estaba vacio -> Usar E/S vuelvo -> hago cosas -> paseo el perro -> Devolver?
     private void devolverRecurso (String nombre) {
         Sistema sistema = Sistema.Current();
         RCB comp = new RCB(nombre, 0);
@@ -308,10 +307,4 @@ public class PCB{
         PCB comp = (PCB)o;
         return comp.getId() == this.id;
     }
-    // Proceso es programa en ejecucion.
-    // El programa ponele que es el txt con el orden de instrucciones.
-    // Proceso agarra el programa y lo ejecuta.
-    // Proceso va leer
-    // Sumar 1 en que linea estoy
-
 }

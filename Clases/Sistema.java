@@ -336,8 +336,8 @@ public class Sistema{
     public void casosPruebaGeneral(){
         //Importar programas
         String[][] importarProgs = {{"Pedir impresora#2","B","C","A","B","B", "Pedir impresora#1", "Usar impresora#2", "Usar impresora#1", "Devolver impresora#1", "Devolver impresora#2", "B", "A", "C"}, 
-                                {"A","Pedir impresora#1", "A", "D", "B", "A", "Pedir impresora#3","Usar impresora#3", "Devolver impresora#3","C", "B", "A", "C", "B", "A", "C", "Usar impresora#1", "Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2", "Devolver impresora#1", "E"}, 
-                                {"P", "P","Pedir impresora#3", "L", "F", "Usar impresora#3", "Devolver impresora#3", "A", "D", "D", "F", "A"}};
+                                {"A","Pedir impresora#1", "A", "D", "B", "A", "Pedir variableGlobalX","Usar variableGlobalX", "Devolver variableGlobalX","C", "B", "A", "C", "B", "A", "C", "Usar impresora#1", "Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2", "Devolver impresora#1", "E"}, 
+                                {"P", "P","Pedir variableGlobalX", "L", "F", "Usar variableGlobalX", "Devolver variableGlobalX", "A", "D", "D", "F", "A"}};
         programas = importarProgs;
         //importar recursos y anadirlos con su tiempo de espera
         String[] listaRecursos = {"impresora#1", "impresora#2", "variableGlobalX"};
@@ -355,6 +355,8 @@ public class Sistema{
         PCB proceso4 = new PCB(4, programas[0], 0);
         PCB proceso5 = new PCB(5, programas[2], 2);
         PCB proceso6 = new PCB(6, programas[2], 2);
+        PCB proceso7 = new PCB(7, programas[2], 2);
+        PCB proceso8 = new PCB(8, programas[2], 2);
         procesos.add(proceso0);
         procesos.add(proceso1);
         procesos.add(proceso2);
@@ -362,6 +364,8 @@ public class Sistema{
         procesos.add(proceso4);
         procesos.add(proceso5);
         procesos.add(proceso6);
+        procesos.add(proceso7);
+        procesos.add(proceso8);
         crearParticiones();
         asignarAMemoria(proceso0);
         asignarAMemoria(proceso1);
@@ -370,6 +374,8 @@ public class Sistema{
         asignarAMemoria(proceso4);
         asignarAMemoria(proceso5);
         asignarAMemoria(proceso6);
+        asignarAMemoria(proceso7);
+        asignarAMemoria(proceso8);
         //importar Usuarios y cargarlos en procesos
         String[] importarUsuarios = {"Matixatim Admin", "Inaki.exe User", "GL Guest", "Caffa Admin"};
         for(int i=0; i<importarUsuarios.length; i++){
@@ -386,6 +392,8 @@ public class Sistema{
         procesos.get(4).setUsuario(usuarios.get(3));
         procesos.get(5).setUsuario(usuarios.get(0));
         procesos.get(6).setUsuario(usuarios.get(3));
+        procesos.get(7).setUsuario(usuarios.get(3));
+        procesos.get(8).setUsuario(usuarios.get(2));
         //grafo 
         inicializarGrafo();
     }

@@ -1,8 +1,6 @@
 package Clases;
 import java.util.Queue;
 import java.util.LinkedList;
-
-
 public class RCB{
     public RCB(String n, int tiempoEspera){
         id = idNumero;

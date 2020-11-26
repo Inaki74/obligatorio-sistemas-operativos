@@ -66,7 +66,7 @@ public class Grafo {
             eV2.remove(v1);
     }
 
-    // Esto solo funciona en esta simulacion.
+    // Esto solo funciona en esta simulacion, no como concepto en grafos en general.
     public boolean esCiclico(Vertex principio) { 
         boolean primeraVez = true;
         Queue<Vertex> q = new LinkedList<>();

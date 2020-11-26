@@ -1,7 +1,6 @@
 package Clases;
 import java.util.Queue;
 import java.util.LinkedList;
-
 public class Procesador{
     public Procesador(){
         quantum = 10;
