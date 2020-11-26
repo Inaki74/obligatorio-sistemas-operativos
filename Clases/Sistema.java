@@ -18,6 +18,58 @@ public class Sistema{
     private Particion[] particiones;
     private ArrayList<PCB> procesos = new ArrayList<PCB>();
     private ArrayList<RCB> recursos = new ArrayList<RCB>();
+
+    private Grafo grafoAsignacionRecursos = new Grafo();
+    /**
+     * Cada vez que se pide un recurso, linkeamos de proceso a recurso   P -> R
+     * Cada vez que se asigna un recurso a un proceso   R -> P
+     * Una vez que un proceso empieza a usar un recurso que le fue asignado, se saca la arista     P -/> R;
+     * Una vez que un proceso devuelve un recurso, se saca la arista    R -/> P.
+     * Antes de asignar un recurso a un proceso, antes se simula en el grafo que pasaria si ocurre
+     *  Ahi nos fijamos si hay un ciclo
+     *      Si hay, matamos proceso (y logeamos)
+     *      Si no, lo dejamos pasar
+     */
+
+    public void agregarVerticeAGrafo(int id, boolean esProceso){
+        Vertex v = new Vertex(id, esProceso);
+        grafoAsignacionRecursos.addVertex(v);
+    }
+
+    public void agregarAristaAGrafo(int id1, boolean esProceso1, int id2, boolean esProceso2){
+        Vertex v1 = new Vertex(id1, esProceso1);
+        Vertex v2 = new Vertex(id2, esProceso2);
+        grafoAsignacionRecursos.addEdge(v1,v2);
+    }
+
+    public void removerArista(int id1, boolean esProceso1, int id2, boolean esProceso2){
+        Vertex v1 = new Vertex(id1, esProceso1);
+        Vertex v2 = new Vertex(id2, esProceso2);
+        grafoAsignacionRecursos.removeEdge(v1, v2);
+    }
+
+    public boolean hayArista(int id1, boolean esProceso1, int id2, boolean esProceso2){
+        Vertex desde = new Vertex(id1, esProceso1);
+        Vertex hasta = new Vertex(id2, esProceso2);
+        return grafoAsignacionRecursos.hayArista(desde, hasta);
+    }
+
+    public boolean verCiclo(int id, boolean esProceso){
+        Vertex ppio = new Vertex(id, esProceso);
+        return grafoAsignacionRecursos.esCiclico(ppio);
+    }
+
+    public void inicializarGrafo(){
+        for(PCB p: procesos){
+            grafoAsignacionRecursos.addVertex(new Vertex(p.getId(), true));
+        }
+
+        for(RCB r: recursos){
+            grafoAsignacionRecursos.addVertex(new Vertex(r.getId(), false));
+        }
+    }
+
+
     private ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
     private String[][] programas;
 
@@ -72,8 +124,8 @@ public class Sistema{
     private void cargarUsuariosEnProcesos(){
         procesos.get(0).setUsuario(usuarios.get(0));
         procesos.get(1).setUsuario(usuarios.get(0));
-        procesos.get(2).setUsuario(usuarios.get(2));
-        procesos.get(3).setUsuario(usuarios.get(2));
+        procesos.get(2).setUsuario(usuarios.get(0));
+        procesos.get(3).setUsuario(usuarios.get(0));
         procesos.get(4).setUsuario(usuarios.get(0));
         procesos.get(5).setUsuario(usuarios.get(1));
         // for(int i=0; i < procesos.size(); i++){
@@ -168,7 +220,7 @@ public class Sistema{
         PCB proceso2 = new PCB(2, programas[0], 0);
         PCB proceso3 = new PCB(3, programas[1], 1);
         PCB proceso4 = new PCB(4, programas[2], 2);
-        PCB proceso5 = new PCB(5, programas[1], 1);
+        PCB proceso5 = new PCB(5, programas[2], 2);
 
         procesos.add(proceso0);
         procesos.add(proceso1);
@@ -235,7 +287,6 @@ public class Sistema{
                     proceso.cambiarEstado("Listo");
                 }
             }
-            
         }
     }
 }

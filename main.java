@@ -12,6 +12,7 @@ class main{
         sistema.crearParticiones();
         sistema.crearProcesos();
         sistema.crearRecursos();
+        sistema.inicializarGrafo();
         sistema.crearUsuarios();
 
         //Loop que use los procesos

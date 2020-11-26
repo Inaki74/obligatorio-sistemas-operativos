@@ -159,16 +159,49 @@ public class PCB{
         if(!usuario.getPermisoRecurso(recurso.getId())){
             System.out.println(colores.ANSI_PURPLE + usuario.getUsuario() +
             " no tiene los permisos para usar el/la " +  recurso.getNombre() + colores.ANSI_RESET);
-            linea = programa.length - 1;
+
+            matarProceso();
             return;
         }
 
         if(recurso.getDisponibilidad()){
+            if(sistema.hayArista(this.id, true, recurso.getId(), false)){
+                sistema.removerArista(this.id, true, recurso.getId(), false);
+            }
+
+            // r -> p
+            sistema.agregarAristaAGrafo(recurso.getId(), false, this.id, true);
+            if(sistema.verCiclo(recurso.getId(), false)){
+                sistema.removerArista(recurso.getId(), false, this.id, true);
+                System.out.println(colores.ANSI_RED + "DEADLOCK DETECTADO: Para asignacion de " + recurso.getNombre() +
+                 " hacia " + this.toString() + colores.ANSI_RESET);
+                // Matar proceso
+                matarProceso();
+                return;
+            }
+
             System.out.println(colores.ANSI_WHITE_BOLD + recurso.getNombre() +
             " se encuentra disponible, se lo asigna al proceso " + this.id + colores.ANSI_RESET);
         }else{
             System.out.println(colores.ANSI_WHITE_BOLD + recurso.getNombre() +
             " no se encuentra disponible." + colores.ANSI_RESET);
+            // p -> r
+            // Aca surge el problema
+            if(this.id == 3 && programa[linea] == "Pedir impresora#2"){
+
+
+            }
+
+            sistema.agregarAristaAGrafo(this.id, true, recurso.getId(), false);
+            if(sistema.verCiclo(this.id, true)){
+                sistema.removerArista(this.id, true, recurso.getId(), false);
+                System.out.println(colores.ANSI_RED + "DEADLOCK DETECTADO: Para pedido de " + recurso.getNombre() +
+                 " hacia " + this.toString() + colores.ANSI_RESET);
+                // Matar proceso
+                matarProceso();
+                return;
+            }
+
             cambiarEstado("Bloqueado");
         }
 
@@ -185,12 +218,34 @@ public class PCB{
 
 //PEDIS estaba vacio -> Usar E/S vuelvo -> hago cosas -> paseo el perro -> Devolver?
     private void devolverRecurso (String nombre) {
+        Sistema sistema = Sistema.Current();
         RCB comp = new RCB(nombre, 0);
         int indexOfComp = recursosUtilizados.indexOf(comp);
         RCB found = recursosUtilizados.get(indexOfComp);
+
+        sistema.removerArista(found.getId(), false, this.id, true);
+
         System.out.println(colores.ANSI_WHITE_BOLD + "El " + found + " fue devuelto. " + colores.ANSI_RESET);
         found.removerProceso();
         recursosUtilizados.remove(found);
+    }
+
+    private void matarProceso(){
+        Sistema sistema = Sistema.Current();
+        for(int i = 0; i < recursosUtilizados.size(); i++){
+            RCB comp = new RCB(recursosUtilizados.get(i).getNombre(), 0);
+            int indexOfComp = recursosUtilizados.indexOf(comp);
+            RCB found = recursosUtilizados.get(indexOfComp);
+
+            sistema.removerArista(found.getId(), false, this.id, true);
+
+            System.out.println(colores.ANSI_WHITE_BOLD + "El " + found + " fue devuelto. " + colores.ANSI_RESET);
+            found.removerProceso();
+        }
+        recursosUtilizados.clear();
+
+        System.out.println(colores.ANSI_RED + "Se mata al " + toString() + colores.ANSI_RESET); 
+        linea = programa.length - 1;
     }
 
     public boolean enEstado (String estado) {
