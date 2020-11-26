@@ -24,8 +24,8 @@ public class Sistema{
 
     public void casosPruebaDeadlocks1(){
         //Importar programas
-        String[][] importarProgs = {{"Pedir impresora#2","B","C","A","B","B", "Pedir impresora#1", "Usar impresora#2", "Usar impresora#1", "Devolver impresora#1", "Devolver impresora#2", "B", "A", "C"}, 
-                                {"A","Pedir impresora#1", "A", "D", "B", "A", "Pedir impresora#2","B","C", "Usar impresora#2", "Usar impresora#1", "Devolver impresora#2", "Devolver impresora#1", "B", "A", "C"}};
+        String[][] importarProgs = {{"Pedir impresora#2","Crear VarLocalX","Incrementar VarLocalX","Incrementar VarLocalX","Crear VarLocalY","Disminuir VarLocalY", "Pedir impresora#1", "Usar impresora#2", "Usar impresora#1", "Devolver impresora#1", "Devolver impresora#2", "Eliminar VarLocalY", "Igualar VarLocalX a 0", "Eliminar VarLocalY"}, 
+                                {"Crear VarLocalY","Pedir impresora#1", "Incrementar VarLocalY", "Disminuir VarLocalY", "Disminuir VarLocalY", "Crear VarLocalX", "Pedir impresora#2","Igualar VarLocalX a VarLocalY","Incrementar VarLocalX", "Usar impresora#2", "Usar impresora#1", "Devolver impresora#2", "Devolver impresora#1", "Incrementar VarLocalY", "Incrementar VarLocalY", "Eliminar VarLocalX"}};
                               
         programas = importarProgs;
         //importar recursos y anadirlos con su tiempo de espera
@@ -59,9 +59,9 @@ public class Sistema{
 
     public void casosPruebaDeadlocks2(){
         //Importar programas
-        String[][] importarProgs = {{"Pedir impresora#2","B","C","A","B","B", "Pedir impresora#1", "Usar impresora#2", "Usar impresora#1", "Devolver impresora#1", "Devolver impresora#2", "B", "A", "C"}, 
-                                {"A","Pedir impresora#1", "A", "D", "B", "A", "Pedir impresora#3","Usar impresora#3", "Devolver impresora#3","C", "B", "A", "C", "B", "A", "C", "Usar impresora#1", "Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2", "Devolver impresora#1", "E"}, 
-                                {"P", "P","Pedir impresora#3", "L", "F", "Usar impresora#3", "Devolver impresora#3", "A", "D", "D", "F", "A"}};
+        String[][] importarProgs = {{"Pedir impresora#2","Crear VarLocalX","Crear VarLocalY","Incrementar VarLocalY","Incrementar VarLocalX","Igualar VarLocalX a VarLocalY", "Pedir impresora#1", "Usar impresora#2", "Usar impresora#1", "Devolver impresora#1", "Devolver impresora#2", "Eliminar VarLocalX", "Igualar VarLocalY a 0", "Eliminar VarLocalY"}, 
+                                {"Crear VarLocalX","Pedir impresora#1", "Incrementar VarLocalX", "Disminuir VarLocalX", "Disminuir VarLocalX", "Crear VarLocalZ", "Pedir impresora#3","Usar impresora#3", "Devolver impresora#3","Incrementar VarLocalZ", "Incrementar VarLocalZ", "Igualar VarLocalZ a VarLocalX", "Disminuir VarLocalZ", "Igualar VarLocalX a 2", "Dividir VarLocalX entre 2", "Eliminar VarLocalZ", "Usar impresora#1", "Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2", "Devolver impresora#1"}, 
+                                {"Crear VarLocalX", "Eliminar VarLocalX","Pedir impresora#3", "Crear VarLocalC", "Incrementar VarLocalC", "Usar impresora#3", "Devolver impresora#3", "Incrementar VarLocalC", "Crear VarLocalD", "Igualar VarLocalD a 0", "Incrementar VarLocalC", "Eliminar VarLocalD"}};
         programas = importarProgs;
         //importar recursos y anadirlos con su tiempo de espera
         String[] listaRecursos = {"impresora#1", "impresora#2", "impresora#3"};
@@ -100,10 +100,12 @@ public class Sistema{
 
     public void casosPruebaDeadlocks3(){
         //Importar programas
-        String[][] importarProgs = {{"Pedir impresora#1", "A","B","C","A","A","Pedir variableGlobalY", "Usar variableGlobalY" , "Usar impresora#1","Devolver variableGlobalY", "A","D","B","A","B","Devolver impresora#1"}, 
-                                    {"Pedir variableGlobalY","Pedir impresora#3", "Usar impresora#3" , "Devolver impresora#3", "Usar variableGlobalY" , "A","B","C","A","A","B","C","Pedir variableGlobalX", "Usar variableGlobalX" , "Devolver variableGlobalX", "Devolver variableGlobalY"}, 
-                                    {"Pedir variableGlobalX", "Usar variableGlobalX" ,  "A","B","C","A","A", "A","B","C","A","A","Pedir impresora#1", "Usar impresora#1", "Devolver impresora#1", "Devolver variableGlobalX"}};
+        String[][] importarProgs = {{"Pedir impresora#1", "Crear VarLocalA","Incrementar VarLocalA","Incrementar VarLocalA","Incrementar VarLocalA","Crear VarLocalB","Pedir variableGlobalY", "Usar variableGlobalY" , "Usar impresora#1","Devolver variableGlobalY", "Disminuir VarLocalA","Crear VarLocalB","Incrementar VarLocalB","Disminuir VarLocalA","Eliminar VarLocalB","Devolver impresora#1"}, 
+                                {"Pedir variableGlobalY","Pedir impresora#3", "Usar impresora#3" , "Devolver impresora#3", "Usar variableGlobalY" , "Crear VarLocalF","Disminuir VarLocalF","Disminuir VarLocalF","Incrementar VarLocalF","Eliminar VarLocalF","Crear VarLocalB","Disminuir VarLocalB","Pedir variableGlobalX", "Usar variableGlobalX" , "Devolver variableGlobalX", "Devolver variableGlobalY"}, 
+                                {"Pedir variableGlobalX", "Usar variableGlobalX" , "Crear VarLocalN","Incrementar VarLocalN","Incrementar VarLocalN","Incrementar VarLocalN","Incrementar VarLocalN", "Multiplicar VarLocalN * 2","Dividir VarLocalN entre 2","Disminuir VarLocalN","Disminuir VarLocalN","Eliminar VarLocalN","Pedir impresora#1", "Usar impresora#1", "Devolver impresora#1", "Devolver variableGlobalX"}};
         programas = importarProgs;
+
+
         //importar recursos y anadirlos con su tiempo de espera
         String[] listaRecursos = {"impresora#1", "impresora#2", "impresora#3", "variableGlobalX", "variableGlobalY"};
         RCB recurso1 = new RCB(listaRecursos[0], 4);
@@ -146,9 +148,9 @@ public class Sistema{
     //done
     public void casosPruebaUsuarios1(){
         //Importar programas
-        String[][] importarProgs = {{"B","C","A","B","B", "Pedir impresora#1","B", "Usar impresora#1", "Devolver impresora#1", "B", "A", "C"}, 
-                                {"A", "A", "D", "B", "A", "Pedir impresora#3","Usar impresora#3", "Devolver impresora#3"}, 
-                                {"P", "P","Pedir impresora#2", "L", "F", "Usar impresora#2", "Devolver impresora#2", "A", "D", "D", "F", "A"}};
+        String[][] importarProgs = {{"Crear VarLocalA","Crear VarLocalB","Crear VarLocalC","Igualar VarLocalA a VarLocalB","Igualar VarLocalB a VarLocalC", "Pedir impresora#1","Eliminar VarLocalA", "Usar impresora#1", "Devolver impresora#1", "Eliminar VarLocalB", "Eliminar VarLocalC"}, 
+                                {"Crear VarLocalE", "Incrementar VarLocalE", "Incrementar VarLocalE", "Disminuir VarLocalE", "Eliminar VarLocalE", "Pedir impresora#3","Usar impresora#3", "Devolver impresora#3"}, 
+                                {"Crear VarLocalA", "Incrementar VarLocalA","Pedir impresora#2", "Igualar VarLocalA a 0", "Crear VarLocalB", "Usar impresora#2", "Devolver impresora#2", "Igualar VarLocalA a VarLocalB", "Eliminar VarLocalA", "Disminuir VarLocalB", "Disminuir VarLocalB", "Eliminar VarLocalB"}};
         programas = importarProgs;
         //importar recursos y anadirlos con su tiempo de espera
         String[] listaRecursos = {"impresora#1", "impresora#2", "impresora#3"};
@@ -204,11 +206,11 @@ public class Sistema{
     //done
     public void casosPruebaAsignacionDeMemoria1(){
         //Importar programas
-        String[][] importarProgs = {{"A","B","C","D"},
-                                    {"B", "A", "D"},
-                                    {"C", "E", "A"},
-                                    {"D", "A", "B"},
-                                    {"E", "A", "D"}};
+        String[][] importarProgs = {{"Crear VarLocalA","Incrementar VarLocalA","Incrementar VarLocalA","Disminuir VarLocalA"},
+                                    {"Crear VarLocalB", "Disminuir VarLocalB", "Disminuir VarLocalB"},
+                                    {"Crear VarLocalC", "Igualar VarLocalC a 3", "Incrementar VarLocalC"},
+                                    {"Crear VarLocalA", "Incrementar VarLocalA", "Eliminar VarLocalA"},
+                                    {"Crear VarLocalD", "Multiplicar VarLocalD * 2", "Disminuir VarLocalD"}};
         programas = importarProgs;
         //importar recursos y anadirlos con su tiempo de espera
         //No hay recursos
@@ -278,7 +280,7 @@ public class Sistema{
     //done
     public void casosPruebaAsignacionDeMemoria2(){
         //Importar programas
-        String[][] importarProgs = {{"A","B","C","D"}};
+        String[][] importarProgs = {{"Crear VarLocalN","Incrementar VarLocalN","Incrementar VarLocalN","Eliminar VarLocalN"}};
         programas = importarProgs;
         //importar recursos y anadirlos con su tiempo de espera
         //no hay recursos
@@ -335,9 +337,9 @@ public class Sistema{
 
     public void casosPruebaGeneral(){
         //Importar programas
-        String[][] importarProgs = {{"Pedir impresora#2","B","C","A","B","B", "Pedir impresora#1", "Usar impresora#2", "Usar impresora#1", "Devolver impresora#1", "Devolver impresora#2", "B", "A", "C"}, 
-                                {"A","Pedir impresora#1", "A", "D", "B", "A", "Pedir variableGlobalX","Usar variableGlobalX", "Devolver variableGlobalX","C", "B", "A", "C", "B", "A", "C", "Usar impresora#1", "Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2", "Devolver impresora#1", "E"}, 
-                                {"P", "P","Pedir variableGlobalX", "L", "F", "Usar variableGlobalX", "Devolver variableGlobalX", "A", "D", "D", "F", "A"}};
+        String[][] importarProgs = {{"Pedir impresora#2","Crear VarLocalA","Crear VarLocalB","Incrementar VarLocalA","Incrementar VarLocalA","Disminuir VarLocalB", "Pedir impresora#1", "Usar impresora#2", "Usar impresora#1", "Devolver impresora#1", "Devolver impresora#2", "Incrementar VarLocalB", "Eliminar VarLocalA", "Eliminar VarLocalB"}, 
+                                {"Crear VarLocalN","Pedir impresora#1", "Incrementar VarLocalN", "Incrementar VarLocalN", "Incrementar VarLocalN", "Crear VarLocalI", "Pedir impresora#3","Usar impresora#3", "Devolver impresora#3","Disminuir VarLocalI", "Disminuir VarLocalI", "Disminuir VarLocalI", "Eliminar VarLocalN", "Incrementar VarLocalI", "Eliminar VarLocalI", "Usar impresora#1", "Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2", "Devolver impresora#1"}, 
+                                {"Crear VarLocalX", "Incrementar VarLocalX","Pedir impresora#3", "Incrementar VarLocalX", "Eliminar VarLocalX", "Usar impresora#3", "Devolver impresora#3", "Crear VarLocalY", "Disminuir VarLocalY", "Disminuir VarLocalY", "Eliminar VarLocalY", "Crear VarLocalZ"}};
         programas = importarProgs;
         //importar recursos y anadirlos con su tiempo de espera
         String[] listaRecursos = {"impresora#1", "impresora#2", "variableGlobalX"};
