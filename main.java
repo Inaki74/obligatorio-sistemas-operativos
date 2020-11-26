@@ -17,10 +17,11 @@ class main{
         System.out.println("Hecho por " + colores.ANSI_WHITE_BOLD + "Iñaki Etchegaray, Matías González y Gastón Landeira" + colores.ANSI_RESET);
         while(!exit){
             System.out.println("-------------------------------------------------------------");
-            System.out.println("Inserte el número de opción que desea elegir");
+            System.out.println("Inserte el " + colores.ANSI_WHITE_BOLD + "número " + colores.ANSI_RESET + "de opción que desea elegir");
             System.out.println("1 -> Casos de prueba");
             System.out.println("2 -> Descripcion de los Casos de Prueba");
             System.out.println("3 -> Salir del programa");
+            System.out.println("");
 
             int entrada = scanner.nextInt();
             
@@ -43,7 +44,7 @@ class main{
         boolean exitPrueba = false;
         while(!exitPrueba){
             System.out.println("");
-            System.out.println("Inserte el numero de opción que desea elegir");
+            System.out.println("Inserte el " + colores.ANSI_WHITE_BOLD + "número " + colores.ANSI_RESET + "de opción que desea elegir");
             System.out.println("1 -> Prueba deadlocks Básica");
             System.out.println("2 -> Prueba deadlocks Avanzada 1");
             System.out.println("3 -> Prueba deadlocks Avanzada 2");
@@ -93,7 +94,7 @@ class main{
         
                     sistema.avanzarRecursos();
                 }
-                System.out.println(colores.ANSI_RED + "No hay mas procesos por ejecutar..." + colores.ANSI_RESET);
+                System.out.println(colores.ANSI_RED + "No hay más procesos por ejecutar..." + colores.ANSI_RESET);
                 System.out.println(colores.ANSI_RED + "EXIT" + colores.ANSI_RESET);
                 sistema.resetSistema();
             }
@@ -104,7 +105,7 @@ class main{
         boolean exitAyuda = false;
         while(!exitAyuda){
             System.out.println("");
-            System.out.println("Inserte el numero de opción que desea elegir");
+            System.out.println("Inserte el " + colores.ANSI_WHITE_BOLD + "número " + colores.ANSI_RESET + "de opción que desea elegir");
             System.out.println("1 -> Prueba deadlocks Básica explicación");
             System.out.println("2 -> Prueba deadlocks Avanzada 1 explicación");
             System.out.println("3 -> Prueba deadlocks Avanzada 2 explicación");

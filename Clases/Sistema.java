@@ -100,9 +100,9 @@ public class Sistema{
 
     public void casosPruebaDeadlocks3(){
         //Importar programas
-        String[][] importarProgs = {{"Pedir impresora#2","B","C","A","B","B", "Pedir impresora#1", "Usar impresora#2", "Usar impresora#1", "Devolver impresora#1", "Devolver impresora#2", "B", "A", "C"}, 
-                                {"A","Pedir impresora#1", "A", "D", "B", "A", "Pedir impresora#3","Usar impresora#3", "Devolver impresora#3","C", "B", "A", "C", "B", "A", "C", "Usar impresora#1", "Pedir impresora#2", "Usar impresora#2", "Devolver impresora#2", "Devolver impresora#1", "E"}, 
-                                {"P", "P","Pedir impresora#3", "L", "F", "Usar impresora#3", "Devolver impresora#3", "A", "D", "D", "F", "A"}};
+        String[][] importarProgs = {{"Pedir impresora#1", "A","B","C","A","A","Pedir variableGlobalY", "Usar variableGlobalY" , "Usar impresora#1","Devolver variableGlobalY", "A","D","B","A","B","Devolver impresora#1"}, 
+                                    {"Pedir variableGlobalY","Pedir impresora#3", "Usar impresora#3" , "Devolver impresora#3", "Usar variableGlobalY" , "A","B","C","A","A","B","C","Pedir variableGlobalX", "Usar variableGlobalX" , "Devolver variableGlobalX", "Devolver variableGlobalY"}, 
+                                    {"Pedir variableGlobalX", "Usar variableGlobalX" ,  "A","B","C","A","A", "A","B","C","A","A","Pedir impresora#1", "Usar impresora#1", "Devolver impresora#1", "Devolver variableGlobalX"}};
         programas = importarProgs;
         //importar recursos y anadirlos con su tiempo de espera
         String[] listaRecursos = {"impresora#1", "impresora#2", "impresora#3", "variableGlobalX", "variableGlobalY"};
@@ -421,10 +421,10 @@ public class Sistema{
     }
 
     public boolean[] devolverPermisosRecursosCasoX(Perfiles p){
-        boolean[] permisosRecursos = new boolean[programas.length];
+        boolean[] permisosRecursos = new boolean[recursos.size()];
         switch(p){
             case Admin:
-                for(int i=0; i < programas.length; i++){
+                for(int i=0; i < recursos.size(); i++){
                     permisosRecursos[i] = true; 
                 }
             break;
